@@ -10,7 +10,7 @@ work() {
   while [ "$i" -le "$2" ]; do
     # echo "Trying item ${i}"
     item="$(curl -s "https://hacker-news.firebaseio.com/v0/item/${i}.json")"
-    if [ "$(echo "$item" | jq '.type')" = '"story"' ]; then
+    if [ "$(echo "$item" | jq -r '.type')" = "story" ]; then
       descendants="$(echo "$item" | jq '.descendants')"
       [ "$descendants" = "null" ] && descendants=0
 
