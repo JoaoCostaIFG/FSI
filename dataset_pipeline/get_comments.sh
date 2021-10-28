@@ -4,7 +4,7 @@
 out_file_suf="comments.json"
 
 comment_ids="$(mktemp)"
-jq '.[].kids[:2]' < stories.json | jq -s add | jq '.[]' |
+jq '.[].kids[:2]' <stories.json | jq -s add | jq '.[]' |
   awk '{print "url=https://hacker-news.firebaseio.com/v0/item/"$0".json"}' >"$comment_ids"
 
 split -n l/4 "$comment_ids"
@@ -16,7 +16,7 @@ for f in xaa xab xac xad; do
   out_file="${f}_${out_file_suf}"
   rm -f "$out_file"
   curl -s -K "$f" |
-    jq 'select(.dead == null, .dead == false)' >"$out_file" && 
+    jq 'select(.dead == null and .deleted == null)' >"$out_file" && 
     rm -f "$f" &
 done
 
