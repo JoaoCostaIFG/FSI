@@ -3,6 +3,7 @@ import json
 from numpy import NaN
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Load File
 f = open('stories.json',)
@@ -26,6 +27,10 @@ def groupby_year(df):
 
 def groupby_trimester(df):
     return df.groupby(pd.Grouper(key='time', freq='3M'))
+
+
+def groupby_hour(df):
+    return df.groupby(df['time'].dt.hour)
 
 
 def groupby_author(df):
@@ -67,9 +72,22 @@ def plot_dead(df):
     plt.show()
 
 
+def plot_heatmap_score(df):
+    median_score = df.groupby([df['time'].dt.hour, df['time'].dt.weekday])[
+        'score'].mean().rename_axis(['hour', 'day']).reset_index()
+    print(median_score)
+    median_score = median_score.pivot(
+        index='hour', columns='day', values='score')
+    sns.heatmap(median_score, annot=True, fmt="g", cmap='viridis',
+                xticklabels=["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"])
+    plt.show()
+
+
 # plot_dead(df)
 # groupby_trimester(df)['id'].count().plot(kind="line")
 # plot_count(groupby_trimester(df))
 # plot_top_count(groupby_author(df))
-plot_top_posts_by_score(df)
+# plot_top_posts_by_score(df)
 # plot_top_posts_by_comment(df)
+# plot_score(groupby_hour(df))
+plot_heatmap_score(df)
