@@ -1,4 +1,5 @@
-.PHONY: all
-all:
-	git clone "https://github.com/massanishi/hackernews-post-datasets"
-	jq -s "hackernews-post-datasets-main/*.json"
+.PHONY: get_data
+get_data:
+	dataset_pipeline/get_stories.sh
+	dataset_pipeline/filter_stories.sh
+	dataset_pipeline/get_comments.sh

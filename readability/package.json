@@ -1,0 +1,24 @@
+{
+  "name": "readability",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "bin": {
+    "readability": "bin/readability.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli",
+    "readability"
+  ],
+  "type": "module",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@mozilla/readability": "^0.4.1",
+    "jsdom": "^18.0.0",
+    "node-fetch": "^3.0.0"
+  }
+}
