@@ -12,8 +12,9 @@ jq -c '.[] | select(.url != null)' <stories.json |
 
     id="$(echo "$item" | jq -r '.id')"
     url="$(echo "$item" | jq -r '.url')"
-    html_content="$(readability "$url" 2>/dev/null)"
+    html_content="$(readability "$url" 2>/dev/null | sed 's/\"/\\\"/g' |
+      tr '\n' ' ' | tr '\t' ' ' | sed 's/[ ]\+/ /g')"
 
-    printf "{\"id\": %s, \"html_content\": \"%s\"}" "$id" "$html_content" >> "$out_file"
+    printf '{"id": %s, "html_content": "%s"}' "$id" "$html_content" >> "$out_file"
   done
 
