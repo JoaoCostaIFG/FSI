@@ -35,10 +35,12 @@ export async function cli(args) {
 
   var doc = new JSDOM(websiteHtml, {
     url: url,
+    strictSSL: false,
   });
 
   let reader = new Readability(doc.window.document);
   let article = reader.parse();
 
-  console.log(article.textContent.trim());
+  if (article != null)
+    console.log(article.textContent.trim());
 }
