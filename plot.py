@@ -83,6 +83,17 @@ def plot_heatmap_score(df):
     plt.show()
 
 
+def score_box_plot(df):  # TODO maybe pass groupby by arg
+    groupby_year(df).boxplot(subplots=False, rot=45, column=["score"])
+    plt.show()
+
+
+def comment_box_plot(df, groupby):
+    df['kids'] = df['kids'].apply(len)  # TODO prob do always this?
+    groupby(df).boxplot(subplots=False, rot=45, column=["kids"])
+    plt.show()
+
+
 # plot_dead(df)
 # groupby_trimester(df)['id'].count().plot(kind="line")
 # plot_count(groupby_trimester(df))
@@ -90,4 +101,5 @@ def plot_heatmap_score(df):
 # plot_top_posts_by_score(df)
 # plot_top_posts_by_comment(df)
 # plot_score(groupby_hour(df))
-plot_heatmap_score(df)
+# plot_heatmap_score(df)
+comment_box_plot(df, groupby_month)
