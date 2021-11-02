@@ -1,9 +1,10 @@
+# FSI
 
-Breve descrição do grupo
+## Breve descrição do grupo
 
-* Turno: [LM]XX
-* Grupo: YY
-* Alunos:
-    - Aluno1 upZZZZZ 
-    - Aluno2 upZZZZZ
-    - Aluno3 upZZZZZ
+- Turno: M05
+- Grupo: 03
+- Alunos:
+  - Ana Barros up201806593
+  - João Costa up201806560
+  - João Lucas up201806436
