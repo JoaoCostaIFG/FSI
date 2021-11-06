@@ -3,6 +3,7 @@
 # Get the stories of the dataset.
 # This data is divided into multiple JSON files that we join into 1
 # single JSON array
+#
 
 # get dataset
 rm -rf "hackernews-post-datasets"

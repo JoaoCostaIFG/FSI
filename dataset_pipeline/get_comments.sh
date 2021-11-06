@@ -2,6 +2,7 @@
 #
 # Download the top 3 comments of all posts.
 # Only keep those that haven't been deleted and are 'alive'.
+#
 
 # prepare output file
 out_file_suf="comments.json"

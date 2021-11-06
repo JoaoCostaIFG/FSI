@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# Fetch the main textual content of stories that have urls.
+#
 
 out_file="html_content.json"
 rm -f "$out_file"
