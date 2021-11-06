@@ -1,14 +1,14 @@
 import fetch from "node-fetch";
 import AbortController from 'abort-controller';
-import { Readability } from "@mozilla/readability";
-import { JSDOM } from "jsdom";
+import {Readability} from "@mozilla/readability";
+import {JSDOM} from "jsdom";
 
 async function getWebsiteHtml(url) {
   // 1 sec timeout
   const controller = new AbortController();
   const timeout = setTimeout(() => {
-	  controller.abort();
-  }, 3000);
+    controller.abort();
+  }, 10000);
 
   let content;
   try {
@@ -19,6 +19,10 @@ async function getWebsiteHtml(url) {
   } finally {
     clearTimeout(timeout)
   }
+
+  // skip binary/non-html data
+  let content_type = content.headers.get('Content-Type');
+  if (content_type.match(/^text\/html/) == null) return null;
 
   return content.text();
 }
@@ -40,7 +44,6 @@ export async function cli(args) {
 
   let reader = new Readability(doc.window.document);
   let article = reader.parse();
-
   if (article != null)
     console.log(article.textContent.trim());
 }
