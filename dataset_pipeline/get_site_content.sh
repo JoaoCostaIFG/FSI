@@ -3,6 +3,7 @@
 out_file="html_content.json"
 rm -f "$out_file"
 
+# filter for stories that have an url
 stories="$(mktemp)"
 jq -c '.[] | select(.url != null)' <stories.json >"$stories"
 
@@ -17,10 +18,12 @@ for f in xaa xab xac xad xae xaf xag xah; do
     id="$(echo "$item" | jq -r '.id')"
     url="$(echo "$item" | jq -r '.url')"
 
-    html_content="$(readability "$url" 2>/dev/null |
-      sed -e 's/\\/\\\\/g' -e 's/"/\\"/g' |
-      tr '\n' ' ' | tr '\t' ' ' | tr -cd "[:print:]" |
-      sed 's/[ ]\+/ /g')"
+    # fetch the text content of the site in a compact format
+    html_content="$(readability "$url" 2>/dev/null |  # fetch text content in a human-readable fashion
+      sed -e 's/\\/\\\\/g' -e 's/"/\\"/g' |           # escape characters for JSON storage/parsing
+      tr '\n' ' ' | tr '\t' ' ' |                     # make the content fit into a single line
+      tr -cd "[:print:]" |                            # remove non-printable characters
+      sed 's/[ ]\+/ /g')"                             # compress blank spaces
 
     printf '{"id": %s, "html_content": "%s"}\n' "$id" "$html_content" >> "${f}_${out_file}"
   done <"$f" &
