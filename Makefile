@@ -1,5 +1,8 @@
 .PHONY: all
-all: stories.json comments.json html_content.json
+all: get_data data.db
+
+.PHONY: get_data
+get_data: stories.json comments.json html_content.json
 
 stories.json:
 	@echo "Getting stories"
@@ -14,3 +17,11 @@ comments.json:
 html_content.json:
 	@echo "Getting website content"
 	@dataset_pipeline/get_site_content.sh
+
+data.db:
+	@echo "Data post-processing and database generation"
+	@dataset_pipeline/generate_database.py
+
+.PHONY: clean
+clean:
+	rm -f stories.json comments.json html_content.json data.db
