@@ -9,7 +9,7 @@ class Story {
     Integer story_descendants
     Integer story_score
     Integer story_time
-    Integer story_title
+    String story_title
     String story_text
 }
 
