@@ -36,7 +36,8 @@ story_type_conds = [
         | (df_stories["title"].str.startswith("Launch YC", 0))
     ),
     (df_stories["title"].str.startswith("Show HN:", 0)),
-    ((df_stories["title"].str.startswith("Ask HN:", 0)) | (df_stories["url"] == "")),
+    ((df_stories["title"].str.startswith("Ask HN:", 0))
+     | (df_stories["url"] == "")),
     (df_stories["url"] != ""),
 ]
 story_types = ["LanchHN", "ShowHN", "AskHN", "Normal"]
