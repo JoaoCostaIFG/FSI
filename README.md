@@ -1,5 +1,19 @@
 # HackerSearch - PRI 21/22
 
+## Usage
+
+Run `make` in the root folder.
+
+### Dependencies
+Make sure you have the following dependencies installed before running the project: 
+
+- [jq](https://stedolan.github.io/jq/)
+- [pandas](https://pandas.pydata.org/)
+- [numpy](https://numpy.org/)
+- [html](https://pypi.org/project/html/)
+- [sqlalchemy](https://www.sqlalchemy.org/)
+
+
 ## Dataset
 
 Taken from a
