@@ -22,6 +22,9 @@ stories_df = pd.read_sql_query(
 comments_df = pd.read_sql_query(
     '''SELECT * FROM Comment''', con=engine)
 
+url_df = pd.read_sql_query(
+    '''SELECT * FROM Url''', con=engine)
+
 # Convert Unix timestamp to date
 stories_df["story_time"] = pd.to_datetime(stories_df['story_time'], unit='s')
 
@@ -35,7 +38,7 @@ def plot_heatmap_score(df):
     sns.heatmap(median_score, annot=True, fmt="g", cmap='viridis',
                 xticklabels=["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"])
     plt.show()
-plot_heatmap_score(stories_df)
+# plot_heatmap_score(stories_df)
 
 
 # Numero de posts/score por mes ou hora ou dia
@@ -106,7 +109,8 @@ def score_per_descendants(df):  # TODO maybe pass groupby by arg
     # df.plot.bar()
 
     # Done with line plot
-    plot = df.groupby(df['story_descendants'])['story_score'].median().plot(color=color)
+    plot = df.groupby(df['story_descendants'])[
+                      'story_score'].median().plot(color=color)
     plot.set_xlabel("Number of Descendants")
     plot.set_ylabel("Score")
     plt.show()
@@ -118,7 +122,7 @@ def score_per_descendants(df):  # TODO maybe pass groupby by arg
 # Calcular percentagem de comments que pertencem ao primeiro comment
 
 def comment_percentage(story_df, comment_df):
-    #print(comment_df)
+    # print(comment_df)
     def get_percentage(tup):
         comment = comment_df[comment_df["comment_parent"] == tup['story_id']]
 
@@ -130,4 +134,25 @@ def comment_percentage(story_df, comment_df):
             return 0
     story_df['top_comment_perc'] = story_df.apply(get_percentage, axis=1)
     print(story_df['top_comment_perc'].median())
-comment_percentage(stories_df, comments_df)
+# comment_percentage(stories_df, comments_df)
+
+
+# + dominios mais postados
+def more_domains(url_df, story_df):
+    # From https://stackoverflow.com/questions/44021846/extract-domain-name-from-url-in-python
+    def domain_name(url):
+        return url.split("www.")[-1].split("//")[-1].split(".")[0]
+
+    # Clean URL
+    url_df['url_url'] = url_df['url_url'].apply(domain_name)
+    df = pd.merge(url_df, story_df, left_on='url_story',
+                  right_on="story_id", how="inner")
+
+    p = df.groupby(df['url_url']).count()['url_id'].sort_values(
+        ascending=False).head(20).plot.bar(color=color)
+    p.x_label = "Domain"
+    p.y_label = "Number of Posts with that URL"
+
+    plt.show()
+    # print(url_df['url_url'])
+more_domains(url_df, stories_df)
