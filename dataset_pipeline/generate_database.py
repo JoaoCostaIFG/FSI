@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 #
-#
+# Take the 3 generated JSON files: stories.json,
+# comments.json, and html_content.json, filter them
+# (dropping collumns, treating null values, etc...),
+# and attribute categories to the stories.
+# Afterwards, insert the content into a sqlite3 database.
 #
 
 import pandas as pd
@@ -15,8 +19,9 @@ df_comments = DataFrame(pd.read_json("comments.json"))
 df_urls = DataFrame(pd.read_json("html_content.json"))
 
 # DEAL WITH STORIES #
-# we can drop the stories' kids collumn as it doesn't contain useful information
-# for us (it is redundant with the parent attribute of the comments' data)
+# we can drop the stories' kids collumn as it doesn't contain useful
+# information for us (it is redundant with the parent attribute of
+# the comments' data)
 df_stories.drop(["kids"], axis=1, inplace=True)
 
 # we have many null urls and text
