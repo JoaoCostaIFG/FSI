@@ -47,6 +47,15 @@ data.db:
 	@dataset_pipeline/generate_database.py
 
 data_characterization:
+	@# Usage: plot.py [true|false] [out_folder]
+	@# By default, reads the database file (data.db) and plots different
+	@# kinds of graphs and shows it on screen.
+	@# An argument, `show`, can be given to specify wether the plots are to be
+	@# shown (shown=true) or to be saved as png files (shown=false).
+	@# If `show` is set to false, a second argument can be specified, out_folder,
+	@# which defines which folder the plots will saved into. The default value
+	@# for this argument is docs/plots/
+	to docs/plots/ folder
 	@echo "Generating data characterization information"
 	@plot.py
 

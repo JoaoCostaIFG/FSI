@@ -49,7 +49,7 @@ def plot_heatmap_score(df):
     if (show):
         plt.show()
     else:
-        plt.savefig('books_read.png')
+        plt.savefig(out_folder + "heatmap_score_per_dayandhour.png")
 plot_heatmap_score(stories_df)
 
 
@@ -76,7 +76,7 @@ def posts_per_time(df):
     if (show):
         plt.show()
     else:
-        plt.savefig('books_read.png')
+        plt.savefig(out_folder + "stories_per_time.png")
 posts_per_time(stories_df)
 
 # + bar plot com tipo de posts
@@ -92,7 +92,7 @@ def posts_per_type(df):
     if (show):
         plt.show()
     else:
-        plt.savefig('books_read.png')
+        plt.savefig(out_folder + "stories_per_type.png")
 
 
 posts_per_type(stories_df)
@@ -109,7 +109,7 @@ def descendants_per_type(df):  # TODO maybe pass groupby by arg
     if (show):
         plt.show()
     else:
-        plt.savefig('books_read.png')
+        plt.savefig(out_folder + "descendants_per_type.png")
 
 
 descendants_per_type(stories_df)
@@ -137,7 +137,7 @@ def score_per_descendants(df):  # TODO maybe pass groupby by arg
     if (show):
         plt.show()
     else:
-        plt.savefig('books_read.png')
+        plt.savefig(out_folder + "score_per_descendants.png")
 
 
 score_per_descendants(stories_df)
@@ -180,6 +180,6 @@ def more_domains(url_df, story_df):
     if (show):
         plt.show()
     else:
-        plt.savefig('books_read.png')
+        plt.savefig(out_folder + "score_per_domain.png")
     # print(url_df['url_url'])
 more_domains(url_df, stories_df)
