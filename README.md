@@ -1,18 +1,24 @@
 # HackerSearch - PRI 21/22
 
+## Group information - 1MEIC03 - G33
+
+- Ana Barros - up201806593@edu.fe.up.pt
+- João Costa - up201806560@edu.fe.up.pt
+- João Martins - up201806436@edu.fe.up.pt
+
 ## Usage
 
 Run `make` in the root folder.
 
 ### Dependencies
-Make sure you have the following dependencies installed before running the project: 
+
+Make sure you have the following dependencies installed before running the project:
 
 - [jq](https://stedolan.github.io/jq/)
 - [pandas](https://pandas.pydata.org/)
 - [numpy](https://numpy.org/)
 - [html](https://pypi.org/project/html/)
 - [sqlalchemy](https://www.sqlalchemy.org/)
-
 
 ## Dataset
 
