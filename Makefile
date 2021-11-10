@@ -22,6 +22,10 @@ data.db:
 	@echo "Data post-processing and database generation"
 	@dataset_pipeline/generate_database.py
 
+data_characterization:
+	@echo "Generating data characterization information"
+	@plot.py
+
 .PHONY: clean
 clean:
 	rm -f stories.json comments.json html_content.json data.db
