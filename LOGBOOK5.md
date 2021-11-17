@@ -2,12 +2,13 @@
 
 ## Task 1
 
-Both versions of the shellcode (32 and 64 bit) spawn a shell. We can run commands
-on this shell as usual, but deleting characters doesn't given visual feed. Deleting
-a char from the command line deletes it fromm the buffer, but it remains on screen.
+Both versions of the shellcode (32 and 64 bit) spawn a shell. We can run
+commands on this shell as usual, but deleting characters doesn't given visual
+feed. Deleting a char from the command line deletes it fromm the buffer, but it
+remains on screen.
 
-The environment of these shells includes both a PWD and OLDPWD:. It also includes
-a SHLVL variable. No PATH environment variabl is defined.
+The environment of these shells includes both a PWD and OLDPWD:. It also
+includes a SHLVL variable. No PATH environment variabl is defined.
 
 ![task 1 pt.1](./LOGBOOK5_img/task_1.png)
 
@@ -26,9 +27,9 @@ We'll use L1 for task 3.
 
 ## Task 3
 
-This executable was compiled for 32-bit and, using the instructions in the
-lab pdf, we obtained the following information concerning the address
-of the buffer and the frame pointer.
+This executable was compiled for 32-bit and, using the instructions in the lab
+pdf, we obtained the following information concerning the address of the buffer
+and the frame pointer.
 
 ```
 gdb-peda$ p $ebp
@@ -40,22 +41,21 @@ $2 = (char (*)[100]) 0xffffca3c
 
 ### How to attack
 
-We'll place our shell code in a region above the return address location
-and change the return address to point to that location.
+We'll place our shell code in a region above the return address location and
+change the return address to point to that location.
 
 ### Stack pointer
 
-The frame pointer is pointing to the address of the **last frame pointer.**.
-The last frame pointer is a 32-bit value: 4 byte. With this, we know the
-stack pointer, **sp**, is at `sp + 4 = 0xffffcaa8 + 4 = 0xffffcaac`.
+The frame pointer is pointing to the address of the **last frame pointer.**. The
+last frame pointer is a 32-bit value: 4 byte. With this, we know the stack
+pointer, **sp**, is at `sp + 4 = 0xffffcaa8 + 4 = 0xffffcaac`.
 
 ### The attack
 
-We have a 517 byte buffer to use. We'll start by filling it with **NOPs**,
-and then place our shellcode at the end of this buffer. These **NOPs** will
-be helpful later since we can just point the return address no anywhere in
-this region and the shellcode will be eventually reached (less precision
-required).
+We have a 517 byte buffer to use. We'll start by filling it with **NOPs**, and
+then place our shellcode at the end of this buffer. These **NOPs** will be
+helpful later since we can just point the return address no anywhere in this
+region and the shellcode will be eventually reached (less precision required).
 
 We can calculate that the offset between the buffer address and the frame
 pointer, `fp - buf_addr`, is **108**.
@@ -63,9 +63,8 @@ pointer, `fp - buf_addr`, is **108**.
 With all of these in mind, we can place the address of the start of the
 shellcode as the return address: `buf_addr + start`.
 
-When the function attempts to return, it will jump to the shellcode and
-spawn a shell.
-
+When the function attempts to return, it will jump to the shellcode and spawn a
+shell.
 
 ### Exploit code
 
@@ -109,4 +108,8 @@ with open('badfile', 'wb') as f:
 
 ### Results
 
-We managed to spawn a shell.
+We managed to spawn a root shell. By including the assembly code for the
+`setuid(0)` system call before the shellcode, we were able to spawn a root shell
+on dash, bypassing its mitigation.
+
+![task 3](./LOGBOOK5_img/task_3.png)
