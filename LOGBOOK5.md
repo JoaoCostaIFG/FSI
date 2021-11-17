@@ -9,6 +9,10 @@ a char from the command line deletes it fromm the buffer, but it remains on scre
 The environment of these shells includes both a PWD and OLDPWD:. It also includes
 a SHLVL variable. No PATH environment variabl is defined.
 
+![task 1 pt.1](./LOGBOOK5_img/task_1.png)
+
+![task 1 pt.2](./LOGBOOK5_img/task_1_2.png)
+
 ## Task 2
 
 There are 4 executable with slightly different configs (**DBUF_SIZE**):
