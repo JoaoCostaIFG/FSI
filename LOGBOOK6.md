@@ -125,6 +125,11 @@ with open('badfile', 'wb') as f:
 ### Task 3.A
 
 TODO
+In this sub-task we are asked to change the target value to a different value.
+To achieve this, we started by setting the first four bytes of our payload as
+the first bytes of the target address given to us. Next, we fill the payload with
+63 (???) *%x* format specifiers followed by a *%n* which will load a different value
+to the variable pointed by the target's reference.
 
 ```py
 #!/usr/bin/python3
@@ -157,6 +162,10 @@ with open('badfile', 'wb') as f:
 ### Task 3.B
 
 TODO
+
+This sub-task is similar to the previous one. However, it specifies the final value
+of the target variable which is 0x5000. This time our payload starts the same (with 
+the target's reference first).
 
 ```py
 #!/usr/bin/python3
