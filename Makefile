@@ -61,3 +61,11 @@ data_characterization:
 .PHONY: clean
 clean:
 	rm -f stories.json comments.json html_content.json data.db
+
+.PHONY: docker_build
+docker_build:
+	docker build . -t pri_solr_g33
+
+.PHONY: docker_run
+docker_run:
+	docker run -p 8983:8983 -it pri_solr_g33
