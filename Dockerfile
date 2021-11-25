@@ -1,6 +1,6 @@
 FROM solr:8.10
 
-COPY data/stories.json /data/stories.json
+COPY hackersearch.json /data/hackersearch.json
 
 #COPY simple_schema.json /data/simple_schema.json
 

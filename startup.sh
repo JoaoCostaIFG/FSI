@@ -11,7 +11,7 @@ solr start
 #    http://localhost:8983/solr/courses/schema
 
 # Populate collection
-bin/post -c hackersearch /data/stories.json
+bin/post -c hackersearch /data/hackersearch.json
 
 # Restart in foreground mode so we can access the interface
 solr restart -f
