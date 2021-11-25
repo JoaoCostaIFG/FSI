@@ -1,0 +1,33 @@
+@startuml
+class Type {
+    Integer type_id
+    String type_name
+}
+class Story {
+    Integer story_id
+    String story_by
+    Integer story_descendants
+    Integer story_score
+    Integer story_time
+    String story_title
+    String story_text
+}
+
+class Comment {
+    Integer comment_id
+    String comment_by
+    Integer comment_descendants
+    Integer comment_time
+    String comment_text
+}
+class Url {
+    Integer url_id
+    String url_url
+    String url_text
+}
+
+Type "1" <-- "*" Story : is of
+Story "1" <-- "0..2" Comment : belongs to
+Story "1" <-- "0..1" Url : belongs to
+
+@enduml
