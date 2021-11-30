@@ -1,6 +1,12 @@
 #!/bin/bash
 #
 # Fetch the main textual content of stories that have urls.
+# This data is compressed using sed and tr:
+#  - fetch text content in a human-readable fashion
+#  - escape characters for JSON storage/parsing
+#  - make the content fit into a single line
+#  - remove non-printable characters
+#  - compress blank spaces
 #
 
 out_file="html_content.json"

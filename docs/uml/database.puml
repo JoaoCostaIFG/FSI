@@ -1,0 +1,40 @@
+@startuml
+
+!theme amiga
+
+hide empty members
+
+class Type {
+    type_id : INTEGER 
+    type_name : STRING 
+}
+
+class Story {
+    story_id : INTEGER 
+    story_by : STRING 
+    story_descendants : INTEGER 
+    story_score : INTEGER 
+    story_time : INTEGER 
+    story_title : STRING 
+    story_text : STRING 
+}
+
+class Comment {
+    comment_id : INTEGER 
+    comment_by : STRING 
+    comment_descendants : INTEGER 
+    comment_time : INTEGER 
+    comment_text : STRING 
+}
+
+class Url {
+    url_id : INTEGER 
+    url_url : STRING 
+    url_text : STRING 
+}
+
+Type <-right- "*" Story : < is of 
+Story <-- "0..2" Comment : < belongs to
+Story <-- "0..1  " Url : < belongs to
+
+@enduml

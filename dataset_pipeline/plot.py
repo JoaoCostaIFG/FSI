@@ -5,13 +5,21 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sqlalchemy import create_engine
+import sys
 import numpy as np
 import datetime
 
 # Some base vars
+out_folder = "docs/plots/"
+show = True
+if (len(sys.argv) > 1):
+    show = True if sys.argv[1] == "true" else False
+    if (len(sys.argv) > 2):
+        out_folder = sys.argv[2]
 color = "orange"
 plt.rcParams['font.size'] = 16
 plt.rcParams['figure.autolayout'] = True
+
 
 
 # Load Database
@@ -37,8 +45,12 @@ def plot_heatmap_score(df):
         index='hour', columns='day', values='story_score')
     sns.heatmap(median_score, annot=True, fmt="g", cmap='viridis',
                 xticklabels=["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"])
-    plt.show()
-# plot_heatmap_score(stories_df)
+
+    if (show):
+        plt.show()
+    else:
+        plt.savefig(out_folder + "heatmap_score_per_dayandhour.png")
+plot_heatmap_score(stories_df)
 
 
 # Numero de posts/score por mes ou hora ou dia
@@ -61,8 +73,11 @@ def posts_per_time(df):
     hour_plot = df.groupby(df['story_time'].dt.hour).size().plot(
         kind="bar", rot=0, xlabel="Hour", ylabel="Number of Stories", color=color)
 
-    plt.show()
-# posts_per_time(stories_df)
+    if (show):
+        plt.show()
+    else:
+        plt.savefig(out_folder + "stories_per_time.png")
+posts_per_time(stories_df)
 
 # + bar plot com tipo de posts
 
@@ -73,13 +88,14 @@ def posts_per_type(df):
     for p in bars.patches:
         bars.annotate(str(p.get_height()), (p.get_x() + 0.50 *
                       p.get_width(), p.get_y() + p.get_height() + 300.5), va="center", ha="center")
-    plt.show()
+
+    if (show):
+        plt.show()
+    else:
+        plt.savefig(out_folder + "stories_per_type.png")
 
 
-# posts_per_type(stories_df)
-
-# + Stories com e sem texto no body
-# posts_per_havingtext(stories_df)
+posts_per_type(stories_df)
 
 # + Numero de descendentes por posts
 
@@ -89,10 +105,14 @@ def descendants_per_type(df):  # TODO maybe pass groupby by arg
     df.columns = df.columns.str.replace(
         'story_descendants', 'Number of Comments')
     sns.violinplot(data=df, x="Type", y="Number of Comments")
-    plt.show()
+
+    if (show):
+        plt.show()
+    else:
+        plt.savefig(out_folder + "descendants_per_type.png")
 
 
-# descendants_per_type(stories_df)
+descendants_per_type(stories_df)
 
 
 # + Numero de descendentes por score
@@ -113,10 +133,14 @@ def score_per_descendants(df):  # TODO maybe pass groupby by arg
                       'story_score'].median().plot(color=color)
     plot.set_xlabel("Number of Descendants")
     plot.set_ylabel("Score")
-    plt.show()
+
+    if (show):
+        plt.show()
+    else:
+        plt.savefig(out_folder + "score_per_descendants.png")
 
 
-# score_per_descendants(stories_df)
+score_per_descendants(stories_df)
 # + Estimativa de numero total de comments
 # Stories têm numero total de comments dela
 # Calcular percentagem de comments que pertencem ao primeiro comment
@@ -134,7 +158,7 @@ def comment_percentage(story_df, comment_df):
             return 0
     story_df['top_comment_perc'] = story_df.apply(get_percentage, axis=1)
     print(story_df['top_comment_perc'].median())
-# comment_percentage(stories_df, comments_df)
+comment_percentage(stories_df, comments_df)
 
 
 # + dominios mais postados
@@ -153,6 +177,9 @@ def more_domains(url_df, story_df):
     p.x_label = "Domain"
     p.y_label = "Number of Posts with that URL"
 
-    plt.show()
+    if (show):
+        plt.show()
+    else:
+        plt.savefig(out_folder + "score_per_domain.png")
     # print(url_df['url_url'])
 more_domains(url_df, stories_df)

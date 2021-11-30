@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Download the top 3 comments of all posts.
+# Download the top 2 comments of all posts.
 # Only keep those that haven't been deleted and are 'alive'.
 #
 
@@ -19,6 +19,7 @@ for f in xaa xab xac xad; do
   echo "Spawning $f"
 
   out_file="${f}_${out_file_suf}"
+  # a file is used for input in order to use persistent connections
   curl -s -K "$f" |
     jq '. | select((.dead == null or .dead == false) and (.deleted == null or .deleted == false))' >"$out_file" &&
     rm -f "$f" &

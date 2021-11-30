@@ -3,3 +3,5 @@ stories.json
 comments.json
 html_content.json
 data.db
+data/*
+hackersearch.json
