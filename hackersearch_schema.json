@@ -1,0 +1,154 @@
+{
+  "add-field-type": [
+    {
+      "name": "title",
+      "class": "solr.TextField",
+      "indexAnalyzer": {
+        "tokenizer": {
+          "class": "solr.EdgeNGramTokenizerFactory",
+          "minGramSize": 4,
+          "maxGramSize": 5
+        },
+        "filters": [
+          {
+            "class": "solr.ASCIIFoldingFilterFactory",
+            "preserveOriginal": false
+          },
+          { "class": "solr.LowerCaseFilterFactory" }
+        ]
+      },
+      "queryAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.ASCIIFoldingFilterFactory",
+            "preserveOriginal": false
+          },
+          { "class": "solr.LowerCaseFilterFactory" }
+        ]
+      }
+    },
+    {
+      "name": "noUrlText",
+      "class": "solr.TextField",
+      "indexAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.ASCIIFoldingFilterFactory",
+            "preserveOriginal": false
+          },
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.StopFilterFactory",
+            "words": "stopwords.txt"
+          }
+        ]
+      },
+      "queryAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.ASCIIFoldingFilterFactory",
+            "preserveOriginal": false
+          },
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.StopFilterFactory",
+            "words": "stopwords.txt"
+          }
+        ]
+      }
+    },
+    {
+      "name": "text",
+      "class": "solr.TextField",
+      "indexAnalyzer": {
+        "tokenizer": {
+          "class": "solr.UAX29URLEmailTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.ASCIIFoldingFilterFactory",
+            "preserveOriginal": true
+          },
+          { "class": "solr.LowerCaseFilterFactory" },
+          {
+            "class": "solr.StopFilterFactory",
+            "words": "stopwords.txt"
+          }
+        ]
+      },
+      "queryAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.ASCIIFoldingFilterFactory",
+            "preserveOriginal": true
+          },
+          { "class": "solr.LowerCaseFilterFactory" },
+          {
+            "class": "solr.StopFilterFactory",
+            "words": "stopwords.txt"
+          }
+        ]
+      }
+    },
+    {
+      "name": "url",
+      "class": "solr.TextField",
+      "indexAnalyzer": {
+        "tokenizer": {
+          "class": "solr.PatternTokenizerFactory",
+          "pattern": "([a-zA-Z0-9]*)\\.",
+          "group": 1
+        }
+      },
+      "queryAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        }
+      }
+    }
+  ],
+  "add-field": [
+    {
+      "name": "story_title",
+      "type": "title",
+      "stored": true
+    },
+    {
+      "name": "story_text",
+      "type": "noUrlText",
+      "stored": true
+    },
+    {
+      "name": "url_url",
+      "type": "url"
+    },
+    {
+      "name": "url_text",
+      "type": "text",
+      "stored": true,
+      "large": true
+    },
+    {
+      "name": "comment_text",
+      "type": "text",
+      "stored": true,
+      "large": true
+    }
+  ]
+}
