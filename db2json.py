@@ -12,7 +12,12 @@ df_comment = pd.read_sql_query("Select * from Comment", conn)
 
 df = df_story.join(df_type, on="story_type")
 df = df.merge(df_url, left_on="story_id", right_on="url_story", how="left")
-df = df.merge(df_comment, left_on="story_id", right_on="comment_parent", how="left")
+df = df.merge(df_comment, left_on="story_id",
+              right_on="comment_parent", how="left")
 
-df.drop(["story_type", "type_id", "url_id", "url_story", "comment_parent"], axis=1, inplace=True)
+df['story_time'] = pd.to_datetime(df['story_time'], unit='s')
+df['story_time'] = df["story_time"].dt.strftime('%Y-%m-%dT%H:%M:%S')
+
+df.drop(["story_type", "type_id", "url_id", "url_story",
+        "comment_parent"], axis=1, inplace=True)
 df.to_json("hackersearch.json", orient="records")

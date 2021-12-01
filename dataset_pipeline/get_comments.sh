@@ -7,7 +7,7 @@
 # prepare output file
 out_file_suf="comments.json"
 
-# store the top 3 comments of all posts in API request URL form
+# store the top 2 comments of all posts in API request URL form
 comment_ids="$(mktemp)"
 jq '.[].kids[:2][]' <stories.json |
   awk '{print "url=https://hacker-news.firebaseio.com/v0/item/"$0".json"}' >"$comment_ids"
