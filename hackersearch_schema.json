@@ -5,9 +5,9 @@
       "class": "solr.TextField",
       "indexAnalyzer": {
         "tokenizer": {
-          "class": "solr.EdgeNGramTokenizerFactory",
-          "minGramSize": 4,
-          "maxGramSize": 5
+          "class": "solr.NGramTokenizerFactory",
+          "minGramSize": 3,
+          "maxGramSize": 3
         },
         "filters": [
           {
@@ -19,7 +19,9 @@
       },
       "queryAnalyzer": {
         "tokenizer": {
-          "class": "solr.StandardTokenizerFactory"
+          "class": "solr.NGramTokenizerFactory",
+          "minGramSize": 3,
+          "maxGramSize": 3
         },
         "filters": [
           {
@@ -149,6 +151,24 @@
       "type": "text",
       "stored": true,
       "large": true
+    }
+  ],
+  "add-copy-field": [
+    {
+      "source": "story_title",
+      "dest": "search"
+    },
+    {
+      "source": "story_text",
+      "dest": "search"
+    },
+    {
+      "source": "url_url",
+      "dest": "search"
+    },
+    {
+      "source": "url_text",
+      "dest": "search"
     }
   ]
 }
