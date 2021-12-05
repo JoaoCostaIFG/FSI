@@ -12,6 +12,20 @@ curl -X POST -H 'Content-type:application/json' \
     --data-binary @/data/hackersearch_schema.json \
     http://localhost:8983/solr/hackersearch/schema
 
+curl -X POST -H 'Content-type:application/json' \
+  --data-binary '{
+    "update-requesthandler": {
+      "name": "/select",
+      "class": "solr.SearchHandler",
+      "defaults": {
+        "wt": "json", 
+        "indent": true,
+        "df": "search"
+      },
+    }
+  }' \
+  http://localhost:8983/solr/hackersearch/config
+
 # Populate collection
 bin/post -c hackersearch /data/hackersearch.json
 

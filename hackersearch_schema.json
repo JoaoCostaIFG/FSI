@@ -151,6 +151,11 @@
       "type": "text",
       "stored": true,
       "large": true
+    },
+    {
+      "name": "search",
+      "type": "text",
+      "multiValued": true
     }
   ],
   "add-copy-field": [
