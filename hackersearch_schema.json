@@ -12,23 +12,20 @@
         "filters": [
           {
             "class": "solr.ASCIIFoldingFilterFactory",
-            "preserveOriginal": false
+            "preserveOriginal": true
           },
-          { "class": "solr.LowerCaseFilterFactory" }
-        ]
-      },
-      "queryAnalyzer": {
-        "tokenizer": {
-          "class": "solr.NGramTokenizerFactory",
-          "minGramSize": 3,
-          "maxGramSize": 3
-        },
-        "filters": [
           {
-            "class": "solr.ASCIIFoldingFilterFactory",
-            "preserveOriginal": false
+            "class": "solr.LowerCaseFilterFactory"
           },
-          { "class": "solr.LowerCaseFilterFactory" }
+          {
+            "class": "solr.PorterStemFilterFactory"
+          },
+          {
+            "class": "solr.EnglishPossessiveFilterFactory"
+          },
+          {
+            "class": "solr.EnglishMinimalStemFilterFactory"
+          }
         ]
       }
     },
@@ -42,32 +39,22 @@
         "filters": [
           {
             "class": "solr.ASCIIFoldingFilterFactory",
-            "preserveOriginal": false
+            "preserveOriginal": true
           },
           {
             "class": "solr.LowerCaseFilterFactory"
           },
           {
-            "class": "solr.StopFilterFactory",
-            "words": "stopwords.txt"
-          }
-        ]
-      },
-      "queryAnalyzer": {
-        "tokenizer": {
-          "class": "solr.StandardTokenizerFactory"
-        },
-        "filters": [
-          {
-            "class": "solr.ASCIIFoldingFilterFactory",
-            "preserveOriginal": false
+            "class": "solr.PorterStemFilterFactory"
           },
           {
-            "class": "solr.LowerCaseFilterFactory"
+            "class": "solr.EnglishPossessiveFilterFactory"
           },
           {
-            "class": "solr.StopFilterFactory",
-            "words": "stopwords.txt"
+            "class": "solr.EnglishMinimalStemFilterFactory"
+          },
+          {
+            "class": "solr.StopFilterFactory"
           }
         ]
       }
@@ -84,26 +71,20 @@
             "class": "solr.ASCIIFoldingFilterFactory",
             "preserveOriginal": true
           },
-          { "class": "solr.LowerCaseFilterFactory" },
           {
-            "class": "solr.StopFilterFactory",
-            "words": "stopwords.txt"
-          }
-        ]
-      },
-      "queryAnalyzer": {
-        "tokenizer": {
-          "class": "solr.StandardTokenizerFactory"
-        },
-        "filters": [
-          {
-            "class": "solr.ASCIIFoldingFilterFactory",
-            "preserveOriginal": true
+            "class": "solr.LowerCaseFilterFactory"
           },
-          { "class": "solr.LowerCaseFilterFactory" },
           {
-            "class": "solr.StopFilterFactory",
-            "words": "stopwords.txt"
+            "class": "solr.PorterStemFilterFactory"
+          },
+          {
+            "class": "solr.EnglishPossessiveFilterFactory"
+          },
+          {
+            "class": "solr.EnglishMinimalStemFilterFactory"
+          },
+          {
+            "class": "solr.StopFilterFactory"
           }
         ]
       }
@@ -127,12 +108,7 @@
     {
       "name": "singleToken",
       "class": "solr.TextField",
-      "indexAnalyzer": {
-        "tokenizer": {
-          "class": "solr.KeywordTokenizerFactory"
-        }
-      },
-      "queryAnalyzer": {
+      "Analyzer": {
         "tokenizer": {
           "class": "solr.KeywordTokenizerFactory"
         }
