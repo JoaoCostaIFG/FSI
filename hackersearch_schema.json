@@ -141,51 +141,117 @@
     {
       "name": "date",
       "class": "solr.TrieDateField"
+    },
+    {
+      "name": "int",
+      "class": "solr.IntPointField"
     }
   ],
   "add-field": [
     {
-      "name": "story_title",
-      "type": "title",
-      "stored": true
+      "name": "story_id",
+      "type": "int",
+      "indexed": false,
+      "uninvertible": false
     },
     {
-      "name": "story_text",
-      "type": "noUrlText",
-      "stored": true
+      "name": "story_author",
+      "type": "singleToken",
+      "indexed": false,
+      "uninvertible": false
+    },
+    {
+      "name": "story_descendants",
+      "type": "int",
+      "docValues": true,
+      "uninvertible": false
+    },
+    {
+      "name": "story_score",
+      "type": "int",
+      "docValues": true,
+      "uninvertible": false
     },
     {
       "name": "story_time",
       "type": "date",
       "docValues": true,
-      "indexed": true
+      "uninvertible": false
+    },
+    {
+      "name": "story_title",
+      "type": "title",
+      "uninvertible": false
+    },
+    {
+      "name": "story_text",
+      "type": "noUrlText",
+      "uninvertible": false
+    },
+    {
+      "name": "story_type",
+      "type": "singleToken",
+      "uninvertible": false
     },
     {
       "name": "url",
       "type": "url",
-      "stored": false
+      "stored": false,
+      "uninvertible": false
     },
     {
       "name": "url_raw",
-      "type": "singleToken"
+      "type": "singleToken",
+      "indexed": false,
+      "uninvertible": false
     },
     {
       "name": "url_text",
       "type": "text",
-      "stored": true,
-      "multiValued": false,
-      "large": true
+      "large": true,
+      "uninvertible": false
+    },
+    {
+      "name": "comments.comment_id",
+      "type": "int",
+      "indexed": false,
+      "multiValued": true,
+      "uninvertible": false
+    },
+    {
+      "name": "comments.comment_author",
+      "type": "singleToken",
+      "indexed": false,
+      "multiValued": true,
+      "uninvertible": false
+    },
+    {
+      "name": "comments.comment_descendants",
+      "type": "int",
+      "indexed": false,
+      "docValues": true,
+      "multiValued": true,
+      "uninvertible": false
+    },
+    {
+      "name": "comments.comment_time",
+      "type": "date",
+      "indexed": false,
+      "docValues": true,
+      "multiValued": true,
+      "uninvertible": false
     },
     {
       "name": "comments.comment_text",
       "type": "text",
-      "stored": true,
-      "multiValued": true
+      "multiValued": true,
+      "uninvertible": false
     },
     {
       "name": "search",
       "type": "text",
-      "multiValued": true
+      "multiValued": true,
+      "uninvertible": false
     }
   ],
   "add-copy-field": [

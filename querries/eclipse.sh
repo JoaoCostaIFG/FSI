@@ -1,3 +1,5 @@
 #!/bin/sh
 
-curl --globoff "http://localhost:8983/solr/hackersearch/select?q=eclipse"
+curl --globoff --data-urlencode \
+  "q=eclipse" \
+  "http://localhost:8983/solr/hackersearch/select"
