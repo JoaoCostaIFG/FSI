@@ -19,7 +19,8 @@ df.rename(
         "story_by": "story_author",
         "type_name": "story_type",
         "url_url": "url",
-    }
+    },
+    inplace=True,
 )
 
 
@@ -31,7 +32,8 @@ def filter_comments(id):
     df_slice.rename(
         columns={
             "comment_by": "comment_author",
-        }
+        },
+        inplace=True,
     )
     return df_slice
 
