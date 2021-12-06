@@ -9,7 +9,7 @@ solr create -c hackersearch
 
 # Schema definition via API
 curl -X POST -H 'Content-type:application/json' \
-    --data-binary @/data/hackersearch_schema.json \
+    --data-binary @/data/hackersearch_schema_1.json \
     http://localhost:8983/solr/hackersearch/schema
 
 curl -X POST -H 'Content-type:application/json' \
