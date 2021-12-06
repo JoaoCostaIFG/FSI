@@ -123,6 +123,20 @@
           "class": "solr.StandardTokenizerFactory"
         }
       }
+    },
+    {
+      "name": "singleToken",
+      "class": "solr.TextField",
+      "indexAnalyzer": {
+        "tokenizer": {
+          "class": "solr.KeywordTokenizerFactory"
+        }
+      },
+      "queryAnalyzer": {
+        "tokenizer": {
+          "class": "solr.KeywordTokenizerFactory"
+        }
+      }
     }
   ],
   "add-field": [
@@ -137,25 +151,30 @@
       "stored": true
     },
     {
-      "name": "url_url",
+      "name": "url",
       "type": "url"
     },
     {
       "name": "url_text",
       "type": "text",
       "stored": true,
+      "multiValued": false,
       "large": true
     },
     {
-      "name": "comment_text",
+      "name": "comments.comment_text",
       "type": "text",
       "stored": true,
-      "large": true
+      "multiValued": true
     },
     {
       "name": "search",
       "type": "text",
       "multiValued": true
+    },
+    {
+      "name": "url_raw",
+      "type": "singleToken"
     }
   ],
   "add-copy-field": [
@@ -168,12 +187,16 @@
       "dest": "search"
     },
     {
-      "source": "url_url",
+      "source": "url",
       "dest": "search"
     },
     {
       "source": "url_text",
       "dest": "search"
+    },
+    {
+      "source": "url",
+      "dest": "url_raw"
     }
   ]
 }
