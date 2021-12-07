@@ -7,21 +7,10 @@
         "tokenizer": {
           "class": "solr.StandardTokenizerFactory"
         }
-      },
-      "queryAnalyzer": {
-        "tokenizer": {
-          "class": "solr.StandardTokenizerFactory"
-        }
       }
     }
   ],
   "add-field": [
-    {
-      "name": "search",
-      "type": "text",
-      "multiValued": true,
-      "uninvertible": false
-    },
     {
       "name": "story_title",
       "type": "text",
@@ -35,7 +24,6 @@
     {
       "name": "url",
       "type": "text",
-      "stored": false,
       "uninvertible": false
     },
     {
@@ -46,6 +34,12 @@
     },
     {
       "name": "comments.comment_text",
+      "type": "text",
+      "multiValued": true,
+      "uninvertible": false
+    },
+    {
+      "name": "search",
       "type": "text",
       "multiValued": true,
       "uninvertible": false
