@@ -1,15 +1,22 @@
 #!/bin/sh
 
-relevants=""
 IFS=$'\n'
-for title in $(jq '.response.docs[].story_title' $1); do
+for title in $(jq -r '.response.docs[].story_title' $1); do
   read -p "Is title $title relevant?" -n 1 -r
   echo    # New line
   if [[ $REPLY =~ ^[Yy]$ ]]; then
-    relevants="$relevants true"
+    val="true"
   else
-    relevants="$relevants false"
+    val="false"
   fi
+
+  [ $keys ] && keys="$keys|$title" || keys="\"$title"
+  [ $relevants ] && relevants="$relevants|$val" || relevants="\"$val"
 done
 
-jq '.response.docs[] += [input]' $1 $relevants
+relevants=$relevants\"
+keys=$keys\"
+
+A=$(printf '(%s | split("|") ) as $keys | (%s | split("|") ) as $vals | [$keys, $vals] | transpose' $keys $relevants)
+echo $A
+jq -n $A
