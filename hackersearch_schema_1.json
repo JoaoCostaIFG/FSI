@@ -19,7 +19,36 @@
     {
       "name": "search",
       "type": "text",
-      "multiValued": true
+      "multiValued": true,
+      "uninvertible": false
+    },
+    {
+      "name": "story_title",
+      "type": "text",
+      "uninvertible": false
+    },
+    {
+      "name": "story_text",
+      "type": "text",
+      "uninvertible": false
+    },
+    {
+      "name": "url",
+      "type": "text",
+      "stored": false,
+      "uninvertible": false
+    },
+    {
+      "name": "url_text",
+      "type": "text",
+      "large": true,
+      "uninvertible": false
+    },
+    {
+      "name": "comments.comment_text",
+      "type": "text",
+      "multiValued": true,
+      "uninvertible": false
     }
   ],
   "add-copy-field": [
