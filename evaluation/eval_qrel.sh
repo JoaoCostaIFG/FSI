@@ -6,17 +6,19 @@ for title in $(jq -r '.response.docs[].story_title' $1); do
   echo    # New line
   if [[ $REPLY =~ ^[Yy]$ ]]; then
     val="true"
+  elif [[ $REPLY =~ ^[Nn]$ ]]; then
+    val="maybe"
   else
     val="false"
   fi
 
-  [ $keys ] && keys="$keys|$title" || keys="\"$title"
   [ $relevants ] && relevants="$relevants|$val" || relevants="\"$val"
 done
-
 relevants=$relevants\"
-keys=$keys\"
 
-A=$(printf '(%s | split("|") ) as $keys | (%s | split("|") ) as $vals | [$keys, $vals] | transpose' $keys $relevants)
-echo $A
-jq -n $A
+jq_vals=$(printf '(%s | split("|") ) as $vals |' $relevants)
+jq_content="{docs: [[[.response.docs[].story_id[]], [.response.docs[].story_title], [.response.docs[].search], \$vals] | transpose[] |"
+jq_format="{id: .[0], title: .[1], search: .[2], relevant: .[3]}]}"
+Q="$jq_vals$jq_content$jq_format"
+
+jq -r $Q $1 > $2
