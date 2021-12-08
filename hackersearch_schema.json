@@ -5,9 +5,8 @@
       "class": "solr.TextField",
       "indexAnalyzer": {
         "tokenizer": {
-          "class": "solr.NGramTokenizerFactory",
-          "minGramSize": 3,
-          "maxGramSize": 3
+          "class": "solr.StandardTokenizerFactory",
+          "maxTokenLength": 8
         },
         "filters": [
           {
@@ -18,31 +17,11 @@
             "class": "solr.LowerCaseFilterFactory"
           },
           {
-            "class": "solr.PorterStemFilterFactory"
+            "class": "solr.SynonymGraphFilterFactory",
+            "synonyms": "/var/solr/data/hackersearch/mysynonyms.txt"
           },
           {
-            "class": "solr.EnglishPossessiveFilterFactory"
-          },
-          {
-            "class": "solr.EnglishMinimalStemFilterFactory"
-          }
-        ]
-      }
-    },
-    {
-      "name": "noUrlText",
-      "class": "solr.TextField",
-      "indexAnalyzer": {
-        "tokenizer": {
-          "class": "solr.StandardTokenizerFactory"
-        },
-        "filters": [
-          {
-            "class": "solr.ASCIIFoldingFilterFactory",
-            "preserveOriginal": true
-          },
-          {
-            "class": "solr.LowerCaseFilterFactory"
+            "class": "solr.FlattenGraphFilterFactory"
           },
           {
             "class": "solr.PorterStemFilterFactory"
@@ -54,7 +33,9 @@
             "class": "solr.EnglishMinimalStemFilterFactory"
           },
           {
-            "class": "solr.StopFilterFactory"
+            "class": "solr.NGramFilterFactory",
+            "minGramSize": 1,
+            "maxGramSize": 8
           }
         ]
       }
@@ -73,6 +54,13 @@
           },
           {
             "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.SynonymGraphFilterFactory",
+            "synonyms": "/var/solr/data/hackersearch/mysynonyms.txt"
+          },
+          {
+            "class": "solr.FlattenGraphFilterFactory"
           },
           {
             "class": "solr.PorterStemFilterFactory"
@@ -161,7 +149,7 @@
     },
     {
       "name": "story_text",
-      "type": "noUrlText",
+      "type": "text",
       "uninvertible": false
     },
     {

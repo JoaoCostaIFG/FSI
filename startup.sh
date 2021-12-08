@@ -7,6 +7,8 @@ solr start
 
 solr create -c hackersearch
 
+cp /data/mysynonyms.txt /var/solr/data/hackersearch/mysynonyms.txt
+
 # Schema definition via API
 curl -X POST -H 'Content-type:application/json' \
     --data-binary @/data/hackersearch_schema.json \
