@@ -155,7 +155,6 @@
     {
       "name": "story_type",
       "type": "singleToken",
-      "docValues": true,
       "uninvertible": false
     },
     {
