@@ -237,6 +237,10 @@
       "dest": "search"
     },
     {
+      "source": "comments.comment_text",
+      "dest": "search"
+    },
+    {
       "source": "url",
       "dest": "url_raw"
     }
