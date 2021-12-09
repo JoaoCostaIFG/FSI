@@ -5,6 +5,7 @@ COPY ./hackersearch.json /data/hackersearch.json
 COPY ./startup.sh /scripts/startup.sh
 
 COPY ./mysynonyms.txt /data/mysynonyms.txt
+COPY ./newssites.txt /data/newssites.txt
 
 COPY ./hackersearch_schema.json /data/hackersearch_schema.json
 

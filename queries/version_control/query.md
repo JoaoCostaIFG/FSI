@@ -3,7 +3,7 @@
 The relevant documents are the ones that showcase tools for software version
 control or news related to the topic.
 
-**Search:** `version control tools`
+**Search:** `"version control" tools`
 
 ## 10
 

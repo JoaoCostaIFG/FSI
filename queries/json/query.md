@@ -3,7 +3,7 @@
 The relevant documents are the ones that showcase/talk about tools to deal with
 JSON files/data on the command-line.
 
-**Search:** `json tool command line`
+**Search:** `json tool "command line"`
 
 ## 10
 
