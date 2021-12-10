@@ -6,6 +6,7 @@ COPY ./startup.sh /scripts/startup.sh
 
 COPY ./mysynonyms.txt /data/mysynonyms.txt
 COPY ./newssites.txt /data/newssites.txt
+COPY ./newsword.txt /data/newsword.txt
 
 COPY ./hackersearch_schema.json /data/hackersearch_schema.json
 

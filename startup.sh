@@ -9,6 +9,7 @@ solr create -c hackersearch
 
 cp /data/mysynonyms.txt /var/solr/data/hackersearch/mysynonyms.txt
 cp /data/newssites.txt /var/solr/data/hackersearch/newssites.txt
+cp /data/newsword.txt /var/solr/data/hackersearch/newsword.txt
 
 # Schema definition via API
 curl -X POST -H 'Content-type:application/json' \

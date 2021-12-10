@@ -104,15 +104,35 @@
         },
         "filters": [
           {
-            "class": "solr.StopFilterFactory",
+            "class": "solr.KeepWordFilterFactory",
             "words": "newssites.txt"
+          },
+          {
+            "class": "solr.PatternReplaceFilterFactory",
+            "pattern": ".+",
+            "replacement": "news",
+            "replace": "first"
           }
         ]
       },
       "queryAnalyzer": {
         "tokenizer": {
           "class": "solr.StandardTokenizerFactory"
-        }
+        },
+        "filters": [
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.PatternReplaceFilterFactory",
+            "pattern": "new",
+            "replacement": "news"
+          },
+          {
+            "class": "solr.KeepWordFilterFactory",
+            "words": "newsword.txt"
+          }
+        ]
       }
     },
     {
@@ -247,6 +267,14 @@
   ],
   "add-copy-field": [
     {
+      "source": "url",
+      "dest": "url_raw"
+    },
+    {
+      "source": "url",
+      "dest": "newssite_filter"
+    },
+    {
       "source": "story_title",
       "dest": "search"
     },
@@ -267,12 +295,8 @@
       "dest": "search"
     },
     {
-      "source": "url",
-      "dest": "url_raw"
-    },
-    {
-      "source": "url",
-      "dest": "newssite_filter"
+      "source": "newssite_filter",
+      "dest": "search"
     }
   ]
 }

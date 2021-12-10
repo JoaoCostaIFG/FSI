@@ -6,6 +6,7 @@ autonews
 boston
 bostonherald
 breitbart
+buzzfeednews
 cbslocal
 chicagoreader
 chicagotribune
@@ -15,6 +16,7 @@ denverpost
 fox2now
 fox5sandiego
 foxnews
+gallup
 gothamist
 huffpost
 kdvr
@@ -26,6 +28,7 @@ laweekly
 mercurynews
 metrotimes
 miamiherald
+nautil
 nbcchicago
 nbcdfw
 nbclosangeles
@@ -39,6 +42,7 @@ news10
 newsday
 newsweek
 nextshark
+nplusonemag
 npr
 nydailynews
 nypost
@@ -46,16 +50,20 @@ nytimes
 observer
 phillyvoice
 politico
+quillette
 riverfronttimes
 salon
 seattlepi
 seattletimes
+space
 suntimes
+theatlantic
 theintercept
 timesofsandiego
 twincities
 usatoday
 villagevoice
+vox
 washingtontimes
 wgntv
 whdh
