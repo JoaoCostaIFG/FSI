@@ -83,9 +83,31 @@
       "indexAnalyzer": {
         "tokenizer": {
           "class": "solr.PatternTokenizerFactory",
-          "pattern": "([a-zA-Z0-9]*)\\.",
+          "pattern": "([a-zA-Z0-9]*)\\..*",
           "group": 1
         }
+      },
+      "queryAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        }
+      }
+    },
+    {
+      "name": "newsfilter",
+      "class": "solr.TextField",
+      "indexAnalyzer": {
+        "tokenizer": {
+          "class": "solr.PatternTokenizerFactory",
+          "pattern": "([a-zA-Z0-9]*\\.)*([a-zA-Z0-9]*)\\..*",
+          "group": 2
+        },
+        "filters": [
+          {
+            "class": "solr.StopFilterFactory",
+            "words": "newssites.txt"
+          }
+        ]
       },
       "queryAnalyzer": {
         "tokenizer": {
@@ -154,8 +176,7 @@
     },
     {
       "name": "story_type",
-      "type": "singleToken",
-      "uninvertible": false
+      "type": "singleToken"
     },
     {
       "name": "url",
@@ -212,6 +233,12 @@
       "uninvertible": false
     },
     {
+      "name": "newssite_filter",
+      "type": "newsfilter",
+      "stored": false,
+      "uninvertible": false
+    },
+    {
       "name": "search",
       "type": "text",
       "multiValued": true,
@@ -242,6 +269,10 @@
     {
       "source": "url",
       "dest": "url_raw"
+    },
+    {
+      "source": "url",
+      "dest": "newssite_filter"
     }
   ]
 }
