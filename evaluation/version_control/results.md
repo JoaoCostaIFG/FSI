@@ -2,14 +2,14 @@
 
 ## Schemaless
 
-Average Precision: 82.28%
+Average Precision: 77.78%
 P@10: 50.00%
-Recall: 71.43%
-F1: 58.82%
+Recall: 62.50%
+F1: 55.56%
 
 ## Normal Schema
 
 Average Precision: 87.07%
 P@10: 60.00%
-Recall: 46.15%
-F1: 52.17%
+Recall: 50.00%
+F1: 54.55%

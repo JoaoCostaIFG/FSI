@@ -234,7 +234,7 @@
         "Love these kinds of tools.  What is different between husky / git-staged and this?<p>It’s faster and smaller?<p>Quite happy with husky and running tslint/tests with husky on precommit currently.  Curious what the biggest benefits are from left hook and if it’s a pain to switch to if they are amazing benefits.<p>The biggest annoyance with current setup is on prem ci with Jenkins and GitHub Enterprise and complex docker bash scripts embedded in Jenkins.  It’s a pain to get lint/test results to show up in the GitHub pull request ui.  Doesn’t seem like this tool would help make that use case faster to set up.",
         "Generally I'm of the opinion that git hooks are not the right place to place linters or formatters.<p>For a JVM language, it means that you'll spin up a JVM for each step (and you can well have 15 formatters + linters in your stack).<p>So, the formatter better lives in a dev-only part of your codebase, so it's always loaded, interacting with your codebase using _runtime insights_ otherwise impossible to gather, and it's easily hackable.<p>I've authored this kind of solution in the past. It works great, and a proper CI pipeline (i.e. including linters) kills the other half of the problem."
       ],
-      "relevant": "true"
+      "relevant": "false"
     }
   ]
 }
