@@ -6,6 +6,6 @@ COPY ./startup.sh /scripts/startup.sh
 
 COPY ./mysynonyms.txt /data/mysynonyms.txt
 
-COPY ./hackersearch_schema.json /data/hackersearch_schema.json
+COPY ./hackersearch_schemaless.json /data/hackersearch_schema.json
 
 ENTRYPOINT ["/scripts/startup.sh"]
