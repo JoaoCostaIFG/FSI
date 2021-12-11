@@ -125,7 +125,7 @@
           },
           {
             "class": "solr.PatternReplaceFilterFactory",
-            "pattern": "new",
+            "pattern": "new$",
             "replacement": "news"
           },
           {
@@ -142,6 +142,20 @@
         "tokenizer": {
           "class": "solr.KeywordTokenizerFactory"
         }
+      }
+    },
+    {
+      "name": "category",
+      "class": "solr.TextField",
+      "Analyzer": {
+        "tokenizer": {
+          "class": "solr.KeywordTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          }
+        ]
       }
     },
     {
@@ -196,7 +210,7 @@
     },
     {
       "name": "story_type",
-      "type": "singleToken"
+      "type": "category"
     },
     {
       "name": "url",
@@ -275,6 +289,10 @@
       "dest": "newssite_filter"
     },
     {
+      "source": "story_type",
+      "dest": "search"
+    },
+    {
       "source": "story_title",
       "dest": "search"
     },
@@ -292,10 +310,6 @@
     },
     {
       "source": "comments.comment_text",
-      "dest": "search"
-    },
-    {
-      "source": "newssite_filter",
       "dest": "search"
     }
   ]
