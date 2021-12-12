@@ -1,21 +1,24 @@
 #!/bin/bash
 
-#precreate-core hackersearch
-
-# Start Solr in background mode so we can use the API to upload the schema
+# start Solr in background mode so we can use the API to upload the schema
 solr start
 
 solr create -c hackersearch
 
+# synonyms and stuff
 cp /data/mysynonyms.txt /var/solr/data/hackersearch/mysynonyms.txt
 cp /data/newssites.txt /var/solr/data/hackersearch/newssites.txt
 cp /data/newsword.txt /var/solr/data/hackersearch/newsword.txt
 
-# Schema definition via API
+# turn of automatic field creation
+#bin/solr config -c hackersearch -p 8983 -action set-user-property -property update.autoCreateFields -value false
+
+# schema definition via API
 curl -X POST -H 'Content-type:application/json' \
     --data-binary @/data/hackersearch_schema.json \
     http://localhost:8983/solr/hackersearch/schema
 
+# request handler defaults
 curl -X POST -H 'Content-type:application/json' \
   --data-binary '{
     "update-requesthandler": {
@@ -30,8 +33,8 @@ curl -X POST -H 'Content-type:application/json' \
   }' \
   http://localhost:8983/solr/hackersearch/config
 
-# Populate collection
+# populate collection
 bin/post -c hackersearch /data/hackersearch.json
 
-# Restart in foreground mode so we can access the interface
+# restart in foreground mode so we can access the interface
 solr restart -f

@@ -84,12 +84,22 @@
           "class": "solr.PatternTokenizerFactory",
           "pattern": "([a-zA-Z0-9]*)\\..*",
           "group": 1
-        }
+        },
+        "filters": [
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          }
+        ]
       },
       "queryAnalyzer": {
         "tokenizer": {
           "class": "solr.StandardTokenizerFactory"
-        }
+        },
+        "filters": [
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          }
+        ]
       }
     },
     {
@@ -135,18 +145,9 @@
       }
     },
     {
-      "name": "singleToken",
-      "class": "solr.TextField",
-      "Analyzer": {
-        "tokenizer": {
-          "class": "solr.KeywordTokenizerFactory"
-        }
-      }
-    },
-    {
       "name": "category",
       "class": "solr.TextField",
-      "Analyzer": {
+      "indexAnalyzer": {
         "tokenizer": {
           "class": "solr.KeywordTokenizerFactory"
         },
@@ -155,7 +156,21 @@
             "class": "solr.LowerCaseFilterFactory"
           }
         ]
+      },
+      "queryAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          }
+        ]
       }
+    },
+    {
+      "name": "singleToken",
+      "class": "solr.StrField"
     },
     {
       "name": "date",
@@ -214,13 +229,6 @@
     {
       "name": "url",
       "type": "url",
-      "stored": false,
-      "uninvertible": false
-    },
-    {
-      "name": "url_raw",
-      "type": "singleToken",
-      "indexed": false,
       "uninvertible": false
     },
     {
@@ -279,10 +287,6 @@
     }
   ],
   "add-copy-field": [
-    {
-      "source": "url",
-      "dest": "url_raw"
-    },
     {
       "source": "url",
       "dest": "newssite_filter"
