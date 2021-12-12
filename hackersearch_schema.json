@@ -5,8 +5,7 @@
       "class": "solr.TextField",
       "indexAnalyzer": {
         "tokenizer": {
-          "class": "solr.StandardTokenizerFactory",
-          "maxTokenLength": 8
+          "class": "solr.StandardTokenizerFactory"
         },
         "filters": [
           {
@@ -31,11 +30,6 @@
           },
           {
             "class": "solr.EnglishMinimalStemFilterFactory"
-          },
-          {
-            "class": "solr.NGramFilterFactory",
-            "minGramSize": 1,
-            "maxGramSize": 8
           }
         ]
       }
@@ -44,13 +38,18 @@
       "name": "text",
       "class": "solr.TextField",
       "indexAnalyzer": {
+        "charFilter": [
+          {
+            "class": "solr.HTMLStripCharFilterFactory"
+          }
+        ],
         "tokenizer": {
           "class": "solr.UAX29URLEmailTokenizerFactory"
         },
         "filters": [
           {
             "class": "solr.ASCIIFoldingFilterFactory",
-            "preserveOriginal": true
+            "preserveOriginal": false
           },
           {
             "class": "solr.LowerCaseFilterFactory"

@@ -1,9 +1,11 @@
 # Version control querry
 
+The user knows the SVN versionc control tool, but doesn't like it. The user
+wants to find alternatives.  
 The relevant documents are the ones that showcase tools for software version
 control or news related to the topic.
 
-**Search:** `"version control" tools`
+**Search:** `+"version control" tools -svn`
 
 ## 10
 
