@@ -34,7 +34,7 @@
         "Looks very interesting - would benefit from showing some examples and/or use cases",
         "The late 20th century, early 00's version:<p><a href=\"http://www.program-transformation.org/Transform/CodeCrawler\" rel=\"nofollow\">http://www.program-transformation.org/Transform/CodeCrawler</a><p>(And MOOSE)"
       ],
-      "relevant": "false"
+      "relevant": "true"
     },
     {
       "id": [19427332],
@@ -118,7 +118,7 @@
         "Cool stuff! But what about AWS SNS (<a href=\"https://aws.amazon.com/sns/\" rel=\"nofollow\">https://aws.amazon.com/sns/</a>) or Firebase Cloud Messaging (<a href=\"https://firebase.google.com/docs/cloud-messaging/\" rel=\"nofollow\">https://firebase.google.com/docs/cloud-messaging/</a>)?",
         "This is pretty cool, I drop the following shell script on all my servers:<p><pre><code>    #!/bin/bash\n    \n    if [[ -z $1 && -z $2 ]]; then\n        echo \"No Message passed\"\n    else\n        if [[ -z $2 ]]; then\n            curl -s --form-string \"token=MYAPPTOKEN\" --form-string \"user=MYUSERTOKEN\" --form-string \"message=$1\" https://api.pushover.net/1/messages.json\n        else\n            curl -s --form-string \"token=MYAPPTOKEN\" --form-string \"user=MYUSERTOKEN\" --form-string \"title=$1\" --form-string \"message=$2\"  https://api.pushover.net/1/messages.json\n        fi\n    fi\n</code></pre>\nIt's SUPER basic and probably shitty but for me it's perfect. I can add \" && push 'Command is Done'\" to the end of any command and get a notification on my watch/phone/(and desktop? But I don't have pushover on my desktop installed). Great for things you threw into a screen/tmux session and want to know when they finished."
       ],
-      "relevant": "false"
+      "relevant": "true"
     },
     {
       "id": [20587541],
@@ -130,7 +130,7 @@
         "6 months ago [I posted about Apprise here](<a href=\"https://news.ycombinator.com/item?id=19023196\" rel=\"nofollow\">https://news.ycombinator.com/item?id=19023196</a>) and got a lot of amazing and encouraging feedback!  I since took just about everyone's comments and ideas at the time and implemented most of them.<p>Apprise now supports over 40+ different notification services, including configuration files that can be read from disk and the cloud! The library remains incredible light weight and easy to use.<p>I just wanted to share an almost completed solution and hope to hit you all up for more of your thoughts and advice!",
         "Worked about 10 years for a company named Appriss - <a href=\"https://appriss.com\" rel=\"nofollow\">https://appriss.com</a> - no real comment there other than to share the founding CEO used to say the board was presented with a bunch of names \"<i>and picked the worst one</i>\".<p>No real comment other than that, but nostalgia alone will make me play with this, so thanks for sharing."
       ],
-      "relevant": "false"
+      "relevant": "true"
     },
     {
       "id": [19074170],
@@ -154,7 +154,7 @@
         "<i>CODE_OF_CONDUCT.md</i><p><i>Examples of unacceptable behavior by participants include:</i><p><i>Publishing others' private information, such as a physical or electronic address, without explicit permission</i><p>How is this tool not a violation of its own CoC?",
         "I don't get this? It checks against a limited list of websites if a username is taken. So what? This is hardly doxxing or \"smart\". Simply a faster method than the manual way, except it doesn't exhaust all avenues of search."
       ],
-      "relevant": "false"
+      "relevant": "true"
     },
     {
       "id": [19108787],

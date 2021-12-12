@@ -1,5 +1,6 @@
 #!/bin/python
 
+from string import ascii_uppercase as alphabet
 import sys
 import json
 
@@ -58,12 +59,11 @@ def gen_recalls(docs, n=10):
     ]
 
 
-def plot_recall_precision(recall_values, precision_values):
-    import matplotlib.pyplot as plt
-    from sklearn.metrics import PrecisionRecallDisplay
+def get_precision_recalls(docs, n=10):
     import numpy as np
 
-    print(recall_values, precision_values)
+    recall_values = gen_recalls(docs, n)
+    precision_values = gen_precisions(docs, n)
 
     # Let's scatterplot all recall-precision values
     # And lineplot using sklearn the curve with intermediate steps
@@ -90,37 +90,88 @@ def plot_recall_precision(recall_values, precision_values):
                for i in range(len(precision_recall_match))]
     precisions = [precision_recall_match[i][2]
                   for i in range(len(precision_recall_match))]
+
+    return recalls, precisions
+
+
+# Plots multiple recall-precision plots, for each doc
+def plot_recall_precision(recalls_precisions, legends=[], markers=["s", "o", "^"]):
+    import matplotlib.pyplot as plt
+    from sklearn.metrics import PrecisionRecallDisplay
     a = plt.figure()
     axes = a.add_axes([0.1, 0.1, 0.8, 0.8])
 
     # Use dict with extended values to draw line
-    disp = PrecisionRecallDisplay(
-        precisions, recalls)
-    disp.plot(ax=axes)
-    axes.set_ylim([0, 1])
-    plt.scatter(recalls, precisions)
+    i = 0
+    for recalls, precisions in recalls_precisions:
+        print(recalls)
+        print(precisions)
+        print("------------------")
+        disp = PrecisionRecallDisplay(precisions, recalls)
+        d = disp.plot(ax=axes)
+        axes.set_ylim([-0.05, 1.05])
+        plt.scatter(recalls, precisions, marker=markers[i])
+        i += 1
+
     plt.savefig("precision_recall")
+    # Need to set scatter plots to no_legend
+    insert_legends = []
+    for legend in legends:
+        insert_legends.append(legend)
+        insert_legends.append('_nolegend_')
+
+    plt.gca().legend((insert_legends))
     plt.show()
 
-# Calculate all metrics and export results as LaTeX table
-# df = pd.DataFrame([['Metric', 'Value']] +
-# [
-# [evaluation_metrics[m], calculate_metric(m, results, relevant)]
-# for m in evaluation_metrics
-# ]
-# )
+
+def calc_metrics(data):
+    print("Average Precision: {:.2%}".format(ap(data["docs"])))
+    print("P@10: {:.2%}".format(p10(data["docs"])))
+    print("Recall: {:.2%}".format(rec(data["docs"])))
+    print("F1: {:.2%}".format(f1(data["docs"])))
 
 
-if len(sys.argv) != 2:
-    print("Usage: ./evaluate.py qrel.json")
+""" Checks if a document has an unset relevance score"""
+
+
+def check_doc(docs, label):
+    def has_relevancy(doc):
+        return doc["relevant"] == "true" or doc["relevant"] == "false"
+
+    for i in range(len(docs)):
+        if not has_relevancy(docs[i]):
+            print("File " + label + ", document no " +
+                  str(i) + " has invalid relevant type")
+            exit(1)
+
+
+def usage():
+    print("Usage: ./evaluate.py <qrel1 label1 qrel2 label2 ...>")
     exit(-1)
 
-f = open(sys.argv[1])
-data = json.load(f)
 
-print("Average Precision: {:.2%}".format(ap(data["docs"])))
-print("P@10: {:.2%}".format(p10(data["docs"])))
-print("Recall: {:.2%}".format(rec(data["docs"])))
-print("F1: {:.2%}".format(f1(data["docs"])))
+if len(sys.argv) == 1:
+    usage()
 
-plot_recall_precision(gen_recalls(data["docs"]), gen_precisions(data["docs"]))
+jsons = []
+labels = []
+for i in range(1, len(sys.argv[1:]), 2):
+    # Load args
+    file = sys.argv[i]
+    label = sys.argv[i + 1]
+    # Load json
+    f = open(file)
+    data = json.load(f)
+    # Check doc validity
+    check_doc(data["docs"], file)
+
+    jsons.append(data)
+    id = alphabet[i // 2]
+    labels.append(str("System " + id + " - " + label))
+
+recalls_precisions = []
+for data in jsons:
+    calc_metrics(data)
+    recalls_precisions.append(get_precision_recalls(data["docs"]))
+
+plot_recall_precision(recalls_precisions, labels)

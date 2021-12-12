@@ -45,7 +45,7 @@
         "Every time github releases a feature this is the response. These posts are so pathetic. I’m surprised that they continue to play this angle. It’s a very polarizing way to address the community that will definitely continue to stir up us vs them mentality between GitHub and Gitlab users.",
         "For all the bashing GitLab gets, personally, I want GitLab to survive and keep competing at some level with GitHub.<p>Should GitHub dominate the market and gobble up competition, we all know how it goes for its parent company."
       ],
-      "relevant": "false"
+      "relevant": "true"
     },
     {
       "id": [19706396],
@@ -104,7 +104,7 @@
         "This is pretty useful! Putting blinders on and working with a project on my laptop and knowing the folder it's in is automagically getting synced with an actual CDN as well as everything being updated in real-time as I make changes??? Sounds pretty sweet. On my last project I wasted an entire damn day dealing with setting up GH-Pages and another project with Coudflair, a regular hosting company and a few tools to automate my workflow. I really like that all of this is out of the box in this product!",
         "\"Solutions like S3 require uploading, a separate CDN configuration, a manual review of raw data logs, and tedious cache flushing each time you make an update.\"<p>I love all types of automation that lets me avoid doing any of the above. The pricing plans are also very generous... Time to start playing with the free tier :)"
       ],
-      "relevant": "false"
+      "relevant": "true"
     },
     {
       "id": [21522522],
@@ -151,7 +151,7 @@
         "Previous discussion: <a href=\"https://news.ycombinator.com/item?id=4642395\" rel=\"nofollow\">https://news.ycombinator.com/item?id=4642395</a>",
         "Maybe I'm misunderstanding the point of this article, but I always put linefeeds where they should logically be. If people would like to view it in a certain way, it's always easy to put it through a text-processing program, which will do a much better job on semantically separated content rather that that which has had formatting hard-coded into it.<p>(Incidentally, this is also why I use tabs for indentation, since it's a lot easier for tooling to relayout. But I'm not trying to start the holy war here.)"
       ],
-      "relevant": "maybe"
+      "relevant": "false"
     },
     {
       "id": [19367379],

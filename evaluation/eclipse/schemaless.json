@@ -1,7 +1,7 @@
 {
   "docs": [
     {
-      "id": 20351953,
+      "id": [20351953],
       "title": "During a Solar Eclipse, What Are Plants Doing?",
       "search": [
         "During a Solar Eclipse, What Are Plants Doing?",
@@ -13,7 +13,7 @@
       "relevant": "false"
     },
     {
-      "id": 18972516,
+      "id": [18972516],
       "title": "A meteorite hit the moon during yesterday's total lunar eclipse",
       "search": [
         "A meteorite hit the moon during yesterday's total lunar eclipse",
@@ -25,7 +25,7 @@
       "relevant": "false"
     },
     {
-      "id": 20447378,
+      "id": [20447378],
       "title": "Lunar Eclipse: An Email to a Daughter and Son-in-Law",
       "search": [
         "Lunar Eclipse: An Email to a Daughter and Son-in-Law",
@@ -37,7 +37,7 @@
       "relevant": "false"
     },
     {
-      "id": 19623087,
+      "id": [19623087],
       "title": "Event Horizon Telescope Live Press Conference",
       "search": [
         "Event Horizon Telescope Live Press Conference",
@@ -49,7 +49,7 @@
       "relevant": "false"
     },
     {
-      "id": 21195196,
+      "id": [21195196],
       "title": "Decoding the Ancient Greek Astronomical Calculator: Antikythera Mechanism",
       "search": [
         "Decoding the Ancient Greek Astronomical Calculator: Antikythera Mechanism",
@@ -61,7 +61,7 @@
       "relevant": "false"
     },
     {
-      "id": 20602318,
+      "id": [20602318],
       "title": "My experience using Spring boot for website development",
       "search": [
         "My experience using Spring boot for website development",
@@ -72,7 +72,7 @@
       "relevant": "false"
     },
     {
-      "id": 20490580,
+      "id": [20490580],
       "title": "Anaxagoras Was Exiled for Claiming the Moon Was a Rock",
       "search": [
         "Anaxagoras Was Exiled for Claiming the Moon Was a Rock",
@@ -84,7 +84,7 @@
       "relevant": "false"
     },
     {
-      "id": 21501902,
+      "id": [21501902],
       "title": "The transit of Mercury starts at 7:35 am ET and will last for 5.5 hours",
       "search": [
         "The transit of Mercury starts at 7:35 am ET and will last for 5.5 hours",
@@ -96,7 +96,7 @@
       "relevant": "false"
     },
     {
-      "id": 19425485,
+      "id": [19425485],
       "title": "Something about IR Optimization",
       "search": [
         "Something about IR Optimization",
@@ -108,7 +108,7 @@
       "relevant": "false"
     },
     {
-      "id": 19466001,
+      "id": [19466001],
       "title": "Theia: A cloud and desktop IDE framework implemented in TypeScript",
       "search": [
         "Theia: A cloud and desktop IDE framework implemented in TypeScript",
@@ -120,7 +120,7 @@
       "relevant": "true"
     },
     {
-      "id": 20743221,
+      "id": [20743221],
       "title": "A Topographic Map of the Moon",
       "search": [
         "A Topographic Map of the Moon",
@@ -132,7 +132,7 @@
       "relevant": "false"
     },
     {
-      "id": 20432968,
+      "id": [20432968],
       "title": "Sending 1.2M Tweets",
       "search": [
         "Sending 1.2M Tweets",
@@ -144,7 +144,7 @@
       "relevant": "false"
     },
     {
-      "id": 20688178,
+      "id": [20688178],
       "title": "HTTP/2 Denial of Service Advisory",
       "search": [
         "HTTP/2 Denial of Service Advisory",
@@ -156,7 +156,7 @@
       "relevant": "false"
     },
     {
-      "id": 20901358,
+      "id": [20901358],
       "title": "Stellarium: A free open-source planetarium for your computer",
       "search": [
         "Stellarium: A free open-source planetarium for your computer",
@@ -168,7 +168,7 @@
       "relevant": "false"
     },
     {
-      "id": 20828278,
+      "id": [20828278],
       "title": "Emacs 26.3",
       "search": [
         "Emacs 26.3",
@@ -180,7 +180,7 @@
       "relevant": "false"
     },
     {
-      "id": 19572994,
+      "id": [19572994],
       "title": "Ghidra source code officially released",
       "search": [
         "Ghidra source code officially released",
@@ -192,7 +192,7 @@
       "relevant": "true"
     },
     {
-      "id": 20370253,
+      "id": [20370253],
       "title": "Finally an image of X-37B/OTV-5, US Air Force's secretive space plane, in orbit",
       "search": [
         "Finally an image of X-37B/OTV-5, US Air Force's secretive space plane, in orbit",
@@ -204,7 +204,7 @@
       "relevant": "false"
     },
     {
-      "id": 21007326,
+      "id": [21007326],
       "title": "How Adam Neumann’s Over-the-Top Style Built WeWork",
       "search": [
         "How Adam Neumann’s Over-the-Top Style Built WeWork",
@@ -216,7 +216,7 @@
       "relevant": "false"
     },
     {
-      "id": 19534902,
+      "id": [19534902],
       "title": "The sun's magnetic field is ten times stronger than previously believed",
       "search": [
         "The sun's magnetic field is ten times stronger than previously believed",
@@ -228,7 +228,7 @@
       "relevant": "false"
     },
     {
-      "id": 20977753,
+      "id": [20977753],
       "title": "How Do Developers Promote Open Source Projects?",
       "search": [
         "How Do Developers Promote Open Source Projects?",
