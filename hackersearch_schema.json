@@ -84,12 +84,22 @@
           "class": "solr.PatternTokenizerFactory",
           "pattern": "([a-zA-Z0-9]*)\\..*",
           "group": 1
-        }
+        },
+        "filters": [
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          }
+        ]
       },
       "queryAnalyzer": {
         "tokenizer": {
           "class": "solr.StandardTokenizerFactory"
-        }
+        },
+        "filters": [
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          }
+        ]
       }
     },
     {
@@ -137,9 +147,19 @@
     {
       "name": "category",
       "class": "solr.TextField",
-      "Analyzer": {
+      "indexAnalyzer": {
         "tokenizer": {
           "class": "solr.KeywordTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          }
+        ]
+      },
+      "queryAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
         },
         "filters": [
           {
