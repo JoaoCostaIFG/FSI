@@ -2,14 +2,28 @@
 
 ## Schemaless
 
-Average Precision: 77.78%
-P@10: 50.00%
-Recall: 62.50%
-F1: 55.56%
+Average Precision: 90.85%
+P@10: 70.00%
+Recall: 70.00%
+Fβ: 70.00%
 
-## Normal Schema
+## Schema
+
+Average Precision: 89.04%
+P@10: 90.00%
+Recall: 52.94%
+Fβ: 78.95%
+
+## Weighted Schema
+
+Average Precision: 85.71%
+P@10: 90.00%
+Recall: 52.94%
+Fβ: 78.95%
+
+## Schema without synonyms
 
 Average Precision: 87.07%
 P@10: 60.00%
-Recall: 50.00%
-F1: 54.55%
+Recall: 75.00%
+Fβ: 62.50%

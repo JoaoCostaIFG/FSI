@@ -5,11 +5,18 @@
 Average Precision: 1.00%
 P@10: 10.00%
 Recall: 50.00%
-F1: 16.67%
+Fβ: 11.90%
 
-## Normal Schema
+## Schema
 
-Average Precision: 15.75%
-P@10: 20.00%
-Recall: 28.57%
-F1: 23.53%
+Average Precision: 22.20%
+P@10: 30.00%
+Recall: 37.50%
+Fβ: 31.25%
+
+## Weighted Schema
+
+Average Precision: 54.15%
+P@10: 40.00%
+Recall: 44.44%
+Fβ: 40.82%

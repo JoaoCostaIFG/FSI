@@ -32,11 +32,11 @@ def rec(docs, n=10):
     ]) / len_relevant
 
 
-def f1(docs, n=10):
+def fB(docs, beta, n=10):
     """F1 Score"""
     precision = p10(docs, n)
     recall = rec(docs, n)
-    return 2 * (precision * recall) / (precision + recall)
+    return (1 + beta ** 2) * (precision * recall) / ((beta ** 2 * precision) + recall)
 
 
 def getNoRelevants(docs):
@@ -67,35 +67,32 @@ def get_precision_recalls(docs, n=10):
 
     # Let's scatterplot all recall-precision values
     # And lineplot using sklearn the curve with intermediate steps
-    precision_recall_match = [
-        (i, recall_values[i], precision_values[i]) for i in range(len(recall_values))]
+    recall_precision_dict = {
+        recall_values[i]: precision_values[i] for i in range(len(recall_values))}
 
-    set_recalls = set(recall_values)
     # Extend recall_values to include traditional steps for a better curve(0.1, 0.2 ...)
-    recall_values.extend([step for step in np.arange(
+    extended_recall = recall_values.copy()
+    extended_recall.extend([step for step in np.arange(
         0.1, 1.1, 0.1) if step not in recall_values])
-    recall_values = sorted(set(recall_values))
+    extended_recall = sorted(set(extended_recall))
 
-    recall_precision_dict = {v[1]: v[2] for v in precision_recall_match}
     # Extend matching dict to include these new intermediate steps
-    for idx, step in enumerate(recall_values):
-        if step not in set_recalls:  # If we don't have info on this step
-            if recall_values[idx-1] in recall_precision_dict and idx != 0:
-                recall_precision_dict[step] = recall_precision_dict[recall_values[idx-1]]
+    for idx, step in enumerate(extended_recall):
+        if step not in recall_precision_dict:  # If we don't have info on this step
+            if extended_recall[idx-1] in recall_precision_dict:
+                recall_precision_dict[step] = recall_precision_dict[extended_recall[idx-1]]
             else:
-                recall_precision_dict[step] = recall_precision_dict[recall_values[idx+1]]
+                recall_precision_dict[step] = recall_precision_dict[extended_recall[idx+1]]
 
-    # Get recalls for scatterplot
-    recalls = [precision_recall_match[i][1]
-               for i in range(len(precision_recall_match))]
-    precisions = [precision_recall_match[i][2]
-                  for i in range(len(precision_recall_match))]
+    # Values with 0 must be verified, idk why
+    if 0 not in recall_precision_dict:
+        recall_precision_dict[0] = recall_precision_dict[0.1]
 
-    return recalls, precisions
+    return recall_values, precision_values, recall_precision_dict
 
 
 # Plots multiple recall-precision plots, for each doc
-def plot_recall_precision(recalls_precisions, legends=[], markers=["s", "o", "^"]):
+def plot_recall_precision(recalls_precisions, legends=[], markers=["s", "o", "^", "D"]):
     import matplotlib.pyplot as plt
     from sklearn.metrics import PrecisionRecallDisplay
     a = plt.figure()
@@ -103,24 +100,25 @@ def plot_recall_precision(recalls_precisions, legends=[], markers=["s", "o", "^"
 
     # Use dict with extended values to draw line
     i = 0
-    for recalls, precisions in recalls_precisions:
-        print(recalls)
-        print(precisions)
-        print("------------------")
-        disp = PrecisionRecallDisplay(precisions, recalls)
+    for recalls, precisions, recall_dict in recalls_precisions:
+        recall_keys = sorted(list(recall_dict.keys()))
+        precision_values = [recall_dict[key] for key in recall_keys]
+
+        disp = PrecisionRecallDisplay(precision_values, recall_keys)
         d = disp.plot(ax=axes)
-        axes.set_ylim([-0.05, 1.05])
-        plt.scatter(recalls, precisions, marker=markers[i])
+        axes.set_ylim([-0.01, 1.01])
+        # plt.scatter(recalls, precisions, marker=markers[i])
         i += 1
 
-    plt.savefig("precision_recall")
     # Need to set scatter plots to no_legend
-    insert_legends = []
-    for legend in legends:
-        insert_legends.append(legend)
-        insert_legends.append('_nolegend_')
+    # insert_legends = []
+    # for legend in legends:
+        # insert_legends.append(legend)
+        # insert_legends.append('_nolegend_')
 
-    plt.gca().legend((insert_legends))
+    plt.gca().legend((legends))
+    plt.tight_layout()
+    plt.savefig("precision_recall")
     plt.show()
 
 
@@ -128,7 +126,7 @@ def calc_metrics(data):
     print("Average Precision: {:.2%}".format(ap(data["docs"])))
     print("P@10: {:.2%}".format(p10(data["docs"])))
     print("Recall: {:.2%}".format(rec(data["docs"])))
-    print("F1: {:.2%}".format(f1(data["docs"])))
+    print("Fβ: {:.2%}".format(fB(data["docs"], 0.5)))
 
 
 """ Checks if a document has an unset relevance score"""
