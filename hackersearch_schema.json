@@ -135,15 +135,6 @@
       }
     },
     {
-      "name": "singleToken",
-      "class": "solr.TextField",
-      "Analyzer": {
-        "tokenizer": {
-          "class": "solr.KeywordTokenizerFactory"
-        }
-      }
-    },
-    {
       "name": "category",
       "class": "solr.TextField",
       "Analyzer": {
@@ -156,6 +147,10 @@
           }
         ]
       }
+    },
+    {
+      "name": "singleToken",
+      "class": "solr.StrField"
     },
     {
       "name": "date",
