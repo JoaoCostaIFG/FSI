@@ -214,13 +214,6 @@
     {
       "name": "url",
       "type": "url",
-      "stored": false,
-      "uninvertible": false
-    },
-    {
-      "name": "url_raw",
-      "type": "singleToken",
-      "indexed": false,
       "uninvertible": false
     },
     {
@@ -279,10 +272,6 @@
     }
   ],
   "add-copy-field": [
-    {
-      "source": "url",
-      "dest": "url_raw"
-    },
     {
       "source": "url",
       "dest": "newssite_filter"
