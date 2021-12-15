@@ -85,4 +85,4 @@ Then we can use the following request to change Bobby's password:
 ![Change Bobby's password](LOGBOOK7_img/bobbys_password.png)
 
 Afterwards, we can login into Bobby's account using `superpassword` as the password
-![Bobby's login](LOGBOOK7_img/bobbys_login.png)
+![Bobby's login](LOGBOOK7_img/bobby_login.png)
