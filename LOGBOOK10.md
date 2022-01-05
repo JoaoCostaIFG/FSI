@@ -99,3 +99,15 @@ will be executed by a user when he enters our profile.
 3. When we visit our profile, we can see that we Samy is now our friend.
 
 ![Task4_SamyProfileAfterFriend](LOGBOOK10_img/task4_alice_profile_after_friend.png)
+
+### Question 1
+
+The referenced lines serve to send the elgg token in our forged request so that
+the server evaluates the request as a valid request from the user.
+
+### Question 2
+
+A successful attack can't be launched since the Editor mode filters HTML special
+characters and we can't edit the inner HTML content of the field. Thus, injecting
+any script into the _About Me_ field is not possible, as we can't submit the `<script>`
+tag into profile.
