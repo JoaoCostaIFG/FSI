@@ -45,3 +45,8 @@ comments of the post and the direct children of these comments.
 - [jq](https://stedolan.github.io/jq/)
 - [HackerNews API](https://github.com/HackerNews/API)
 - [Curl](https://curl.se/)
+
+## Frontend stuff
+
+- [Simple SOLR frontend](https://github.com/INFO320/simple-search)
+- [Skeleton CSS](http://getskeleton.com/)

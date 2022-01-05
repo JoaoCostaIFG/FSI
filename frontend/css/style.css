@@ -1,0 +1,106 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+
+body {
+  background-color: #000;
+  font-family: "Open Sans", sans-serif;
+  color: #ddd;
+}
+
+h1 {
+  font-weight: bold;
+  text-align: center;
+  color: #ff6600;
+  margin-bottom: 1em;
+  padding-top: 1em;
+}
+
+h3 {
+  font-size: 135%;
+  font-weight: 400;
+  margin-bottom: 5px;
+}
+
+#main-container {
+  background-color: #1a1a1a;
+}
+
+#searchbox {
+  text-align: center;
+}
+
+/* Larger than mobile */
+@media (min-width: 550px) {
+  #query {
+    width: 65% !important;
+  }
+}
+
+@media (min-width: 400px) {
+  #query {
+    width: 80%;
+  }
+}
+
+/* Smaller than mobile */
+@media (max-width: 399px) {
+  #query {
+    width: 100%;
+  }
+}
+
+#search {
+  color: #ddd;
+  background-color: #0a0a0a;
+}
+
+@media (min-width: 750px) {
+  #results {
+    margin: 3em 3em 0em;
+  }
+}
+
+@media (max-width: 749px) {
+  #results {
+    margin: 1em 1em 0em;
+  }
+}
+
+.result ~ .result {
+  margin-top: 1em;
+}
+
+.title {
+  display: inline;
+  font-weight: bold;
+}
+
+.title > a {
+  text-decoration: none;
+  color: #ddd;
+}
+
+.title > a:hover {
+  color: #bbb;
+}
+
+.url {
+  text-decoration: none;
+  color: #4d594f;
+}
+
+.url:hover {
+  text-decoration: underline;
+  color: #4d594f;
+}
+
+.content {
+  margin-top: 0.3em;
+  margin-right: 15%;
+}
+
+/* Smaller than mobile */
+@media (max-width: 400px) {
+  .content {
+    display: none;
+  }
+}

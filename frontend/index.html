@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="Search, Search Engine, Hackernews, YCombinator"> 
+    <meta name="author" content="HackerSearch">
+    <title>HackerSearch</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="js/simpleSearch.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="main-container" class="container">
+      <h1>Hacker Search</h1>
+
+      <!-- Input box where users enter their query -->
+      <div id="searchbox">
+        <input id="query" type="text" placeholder="Search..." required></input>
+        <button id="search">Search</button>
+      </div> <!-- searchbox -->
+
+      <!-- Container where results will be filled in -->
+      <div id="results"></div>
+
+      <!-- Template for results. Each result is later inserted into the results container after getting results from a query -->
+      <div class="template result">
+        <h3 class="title"><a href=""></a></h3>
+        <a href="" class="url"></a>
+        <p class="content"></p> 
+      </div> <!-- template result -->
+    </div> <!-- container -->
+  </body>
+</html>
