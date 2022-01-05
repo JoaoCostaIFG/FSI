@@ -28,7 +28,7 @@ function search(query, $container, $template) {
       q: query,
       qf: "search",
       wt: "json",
-      fl: "story_id, story_title, story_time, story_author, story_content, url, url_text",
+      fl: "story_id, story_author, story_descendants, story_score, story_time, story_title, story_content, url, url_text",
       indent: "false",
       defType: "edismax",
     },
@@ -52,8 +52,10 @@ function renderResults(docs, $container, $template) {
       .append(doc.story_title);
     result.find(".url") // only the domain
       .prop("href", doc.url)
-      .append("(").append(new URL(doc.url).hostname).append(")");
+      .append(`(${new URL(doc.url).hostname})`);
     result.find(".content").append(maxWords(doc.url_text, 30));
+    result.find(".result-footer")
+      .append(`${doc.story_score} points | ${doc.story_author} | ${doc.story_descendants} comments`);
     result.removeClass("template");
     $container.append(result);
   });

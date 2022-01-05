@@ -94,8 +94,7 @@ h3 {
 }
 
 .content {
-  margin-top: 0.3em;
-  margin-right: 15%;
+  margin: 0.3em 15% 0 0;
 }
 
 /* Smaller than mobile */
@@ -103,4 +102,9 @@ h3 {
   .content {
     display: none;
   }
+}
+
+.result-footer {
+  display: inline-block;
+  color: #4d594f;
 }
