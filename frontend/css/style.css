@@ -28,9 +28,15 @@ h3 {
   text-align: center;
 }
 
-#search {
+#search,
+#loadMore {
   color: #ddd;
   background-color: #0a0a0a;
+}
+
+#loadMore {
+  margin-top: 1em;
+  width: 100%;
 }
 
 #filterButtons {
@@ -96,15 +102,21 @@ h3 {
 }
 
 @media (min-width: 750px) {
-  #results {
-    margin: 3em 3em 0em;
+  #queryResults {
+    margin: 3rem 3rem 0em;
   }
 }
 
 @media (max-width: 749px) {
-  #results {
-    margin: 1em 1em 0em;
+  #queryResults {
+    margin: 1rem 1rem 0rem;
   }
+}
+
+#queryInfo {
+  display: inline-block;
+  color: #4d594f;
+  margin-bottom: 1em;
 }
 
 .result ~ .result {

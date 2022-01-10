@@ -38,8 +38,51 @@ class FilterButton {
   }
 }
 
+class LoadMoreButton {
+  constructor($button) {
+    this.$button = $button;
+    this.currentFilter = "all";
+    this.reset();
+  }
+
+  getCurrentFilter() {
+    return this.currentFilter;
+  }
+
+  setCurrentFilter(filter) {
+    this.currentFilter = filter;
+  }
+
+  getCount() {
+    return this.count;
+  }
+
+  getButton() {
+    return this.$button;
+  }
+
+  incrementCount() {
+    this.count += 10;
+    return this.count;
+  }
+
+  reset() {
+    this.count = 10;
+    this.hide();
+  }
+
+  hide() {
+    this.$button.hide();
+  }
+
+  show() {
+    this.$button.show();
+  }
+}
+
 // all filter buttons stored globally
 let filterButtons = new Map();
+let loadMoreBtn;
 
 // doc ready
 $(function () {
@@ -69,6 +112,12 @@ $(function () {
   filterButtons.set("showhn", prepareFilterButton($("#showFilter"), "showhn"));
   filterButtons.set("launchhn", prepareFilterButton($("#launchFilter"), "launchhn"));
   filterButtons.set("news", prepareFilterButton($("#newsFilter"), "news"));
+
+  loadMoreBtn = new LoadMoreButton($("#loadMore"));
+  loadMoreBtn.getButton().click(function () {
+    loadMoreBtn.incrementCount();
+    simpleSearch(loadMoreBtn.getCurrentFilter());
+  });
 });
 
 // Input: query string, results container, result HTML template
@@ -77,6 +126,11 @@ $(function () {
 function search(queryStr, filter, $container, $template) {
   if (queryStr.length == 0) return;
 
+  if (filter !== loadMoreBtn.getCurrentFilter()) {
+    loadMoreBtn.reset();
+    loadMoreBtn.setCurrentFilter(filter);
+  }
+
   let data = {
     q: queryStr,
     qf: "search",
@@ -84,6 +138,7 @@ function search(queryStr, filter, $container, $template) {
     wt: "json",
     indent: "false",
     defType: "edismax",
+    rows: loadMoreBtn.getCount(),
     facet: true,
     "facet.query": "newssite_filter:news",
     "facet.field": "story_type",
@@ -142,26 +197,28 @@ function renderResults(response, facet, filter, $container, $template) {
   });
   filterButtons.get(filter).activate();
 
-  $("#queryInfo").empty().append(`Found ${response.numFound} results.`);
+  $("#queryInfo").empty().append(`Showing ${response.docs.length} results out of ${response.numFound}.`);
+  if (response.docs.length < response.numFound) loadMoreBtn.show();
+  else loadMoreBtn.hide();
+
   // the results
   $container.empty(); // if there are any previous results, remove them
-  $.each(response.docs, function (_, doc) {
+  $.each(response.docs, function (i, doc) {
+    // small division every 10 items (load more results)
+    if (i > 0 && i % 10 == 0) {
+      $container.append("<hr>");
+    }
+
     let result = $template.clone();
     let storyUrl = "https://news.ycombinator.com/item?id=" + doc.story_id;
     result
       .find(".title > a")
       .prop("href", storyUrl)
       .append(doc.story_title);
-    if (doc.url) {
-      // story has URL
-      result.find(".url") // only the domain
-        .prop("href", doc.url)
-        .append(`(${new URL(doc.url).hostname})`);
-    } else {
-      result.find(".url") // only the domain
-        .prop("href", storyUrl)
-        .append(`(${new URL(storyUrl).hostname})`);
-    }
+    let url = doc.url ? doc.url : storyUrl; // stome stories don't have an URL
+    result.find(".url") // only the domain
+      .prop("href", url)
+      .append(`(${new URL(url).hostname})`);
     if (doc.story_content) {
       result.find(".content").append(maxWords(doc.story_content, 30));
     } else if (doc.url_text) {
