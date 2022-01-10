@@ -28,6 +28,51 @@ h3 {
   text-align: center;
 }
 
+#search {
+  color: #ddd;
+  background-color: #0a0a0a;
+}
+
+#filterButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.filterButton {
+  margin: 0;
+  padding: 0;
+  border: none;
+  color: #ddd;
+}
+
+.filterButton ~ .filterButton {
+  margin-left: 1em;
+}
+
+.filterButtonActive {
+  color: #ff6600;
+  text-decoration: underline;
+  /*
+  border-bottom: 2px !important;
+  border-color: #ff6600 !important;
+  */
+}
+
+.filterButton:hover {
+  color: #ff6600;
+}
+
+.filterButton:disabled {
+  color: #4d594f;
+}
+
+.filterButton:focus {
+  color: #ff6600;
+}
+
 /* Larger than mobile */
 @media (min-width: 550px) {
   #query {
@@ -46,11 +91,6 @@ h3 {
   #query {
     width: 100%;
   }
-}
-
-#search {
-  color: #ddd;
-  background-color: #0a0a0a;
 }
 
 @media (min-width: 750px) {
@@ -80,7 +120,8 @@ h3 {
 }
 
 .title > a:hover {
-  color: #bbb;
+  color: #777;
+  /*color: #ff6600;*/
 }
 
 .url {
