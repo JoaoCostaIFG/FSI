@@ -69,7 +69,6 @@ $(function () {
   filterButtons.set("showhn", prepareFilterButton($("#showFilter"), "showhn"));
   filterButtons.set("launchhn", prepareFilterButton($("#launchFilter"), "launchhn"));
   filterButtons.set("news", prepareFilterButton($("#newsFilter"), "news"));
-
 });
 
 // Input: query string, results container, result HTML template
@@ -90,7 +89,25 @@ function search(queryStr, filter, $container, $template) {
     "facet.field": "story_type",
   };
 
-  data["fq"] = "story_type:askhn";
+  switch (filter) {
+    case "normal":
+      data["fq"] = "story_type:normal";
+      break;
+    case "askhn":
+      data["fq"] = "story_type:askhn";
+      break;
+    case "showhn":
+      data["fq"] = "story_type:showhn";
+      break;
+    case "launchhn":
+      data["fq"] = "story_type:launchhn";
+      break;
+    case "news":
+      data["fq"] = "newssite_filter:news";
+      break;
+    default:
+      break;
+  }
 
   $.ajax({
     type: "GET",
@@ -110,12 +127,14 @@ function renderResults(response, facet, filter, $container, $template) {
     return array[array.findIndex(e => e === elem) + 1];
   }
 
-  filterButtons.get("all").setCount(response.numFound);
-  filterButtons.get("normal").setCount(arrayNextElem(facet.facet_fields.story_type, "normal"));
-  filterButtons.get("askhn").setCount(arrayNextElem(facet.facet_fields.story_type, "askhn"));
-  filterButtons.get("showhn").setCount(arrayNextElem(facet.facet_fields.story_type, "showhn"));
-  filterButtons.get("launchhn").setCount(arrayNextElem(facet.facet_fields.story_type, "launchhn"));
-  filterButtons.get("news").setCount(facet.facet_queries["newssite_filter:news"]);
+  if (filter === "all") {
+    filterButtons.get("all").setCount(response.numFound);
+    filterButtons.get("normal").setCount(arrayNextElem(facet.facet_fields.story_type, "normal"));
+    filterButtons.get("askhn").setCount(arrayNextElem(facet.facet_fields.story_type, "askhn"));
+    filterButtons.get("showhn").setCount(arrayNextElem(facet.facet_fields.story_type, "showhn"));
+    filterButtons.get("launchhn").setCount(arrayNextElem(facet.facet_fields.story_type, "launchhn"));
+    filterButtons.get("news").setCount(facet.facet_queries["newssite_filter:news"]);
+  }
 
   // set active button
   filterButtons.forEach((value, _) => {

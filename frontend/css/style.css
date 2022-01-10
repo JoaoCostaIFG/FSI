@@ -44,7 +44,8 @@ h3 {
 .filterButton {
   margin: 0;
   padding: 0;
-  border: none;
+  border-color: transparent;
+  border-radius: 0;
   color: #ddd;
 }
 
@@ -54,22 +55,23 @@ h3 {
 
 .filterButtonActive {
   color: #ff6600;
-  text-decoration: underline;
-  /*
-  border-bottom: 2px !important;
-  border-color: #ff6600 !important;
-  */
+  border-bottom-color: #ff6600 !important;
 }
 
 .filterButton:hover {
   color: #ff6600;
+  border-color: transparent;
+  border-bottom-color: #ff6600 !important;
 }
 
 .filterButton:disabled {
   color: #4d594f;
+  border-color: transparent !important;
+  cursor: initial;
 }
 
 .filterButton:focus {
+  border-color: transparent;
   color: #ff6600;
 }
 
