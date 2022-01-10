@@ -69,6 +69,7 @@ $(function () {
   filterButtons.set("showhn", prepareFilterButton($("#showFilter"), "showhn"));
   filterButtons.set("launchhn", prepareFilterButton($("#launchFilter"), "launchhn"));
   filterButtons.set("news", prepareFilterButton($("#newsFilter"), "news"));
+
 });
 
 // Input: query string, results container, result HTML template
