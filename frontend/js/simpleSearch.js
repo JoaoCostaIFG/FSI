@@ -27,13 +27,13 @@ class FilterButton {
 
   setCount(count) {
     this.count = count;
-    if (count == 0) {
+    if (count === 0) {
       this.$button.prop('disabled', true);
       this.$button.find(".filterHits").empty();
       this.deactivate();
     } else {
       this.$button.prop('disabled', false);
-      this.$button.find(".filterHits").empty().append(`(${count})`);
+      this.$button.find(".filterHits").empty().text(`(${count})`);
     }
   }
 }
@@ -95,7 +95,7 @@ $(function () {
 
   // Performs search when 'enter' key is pressed
   $("#query").keypress(function (event) {
-    if (event.which == 13)
+    if (event.which === 13)
       simpleSearch("all");
   });
 
@@ -124,7 +124,7 @@ $(function () {
 // Effect: makes an AJAX call to the server to get the results of the
 // query, and then injects results into the DOM
 function search(queryStr, filter, $container, $template) {
-  if (queryStr.length == 0) return;
+  if (queryStr.length === 0) return;
 
   if (filter !== loadMoreBtn.getCurrentFilter()) {
     loadMoreBtn.reset();
@@ -170,6 +170,7 @@ function search(queryStr, filter, $container, $template) {
     dataType: "json",
     data: data,
     success: function (data) {
+      console.log(data);
       renderResults(data.response, data.facet_counts, filter, $container, $template);
     },
   });
@@ -179,7 +180,9 @@ function search(queryStr, filter, $container, $template) {
 // Effect: Replaces results container with new results, and renders the appropriate HTML
 function renderResults(response, facet, filter, $container, $template) {
   function arrayNextElem(array, elem) {
-    return array[array.findIndex(e => e === elem) + 1];
+    let idx = array.findIndex(e => e === elem);
+    if (idx < 0 || idx + 1 >= array.length) return 0;
+    return array[idx + 1];
   }
 
   if (filter === "all") {
@@ -197,7 +200,7 @@ function renderResults(response, facet, filter, $container, $template) {
   });
   filterButtons.get(filter).activate();
 
-  $("#queryInfo").empty().append(`Showing ${response.docs.length} results out of ${response.numFound}.`);
+  $("#queryInfo").empty().text(`Showing ${response.docs.length} results out of ${response.numFound}.`);
   if (response.docs.length < response.numFound) loadMoreBtn.show();
   else loadMoreBtn.hide();
 
@@ -214,18 +217,18 @@ function renderResults(response, facet, filter, $container, $template) {
     result
       .find(".title > a")
       .prop("href", storyUrl)
-      .append(doc.story_title);
+      .text(doc.story_title);
     let url = doc.url ? doc.url : storyUrl; // stome stories don't have an URL
     result.find(".url") // only the domain
       .prop("href", url)
-      .append(`(${new URL(url).hostname})`);
+      .text(`(${new URL(url).hostname})`);
     if (doc.story_content) {
-      result.find(".content").append(maxWords(doc.story_content, 30));
+      result.find(".content").text(maxWords(doc.story_content, 30));
     } else if (doc.url_text) {
-      result.find(".content").append(maxWords(doc.url_text, 30));
+      result.find(".content").text(maxWords(doc.url_text, 30));
     }
     result.find(".result-footer")
-      .append(`${doc.story_score} points | ${doc.story_author} | ${doc.story_descendants} comments`);
+      .text(`${doc.story_score} points | ${doc.story_author} | ${doc.story_descendants} comments`);
     result.removeClass("template");
     $container.append(result);
   });
