@@ -40,17 +40,14 @@ h3 {
 }
 
 #filterButtons {
-  display: flex;
-  flex-direction: row;
-  /* justify-content: space-around; */
-  justify-content: center;
-  overflow-x: auto;
-  overflow-y: hidden;
+  display: block;
+  overflow: auto;
+  height: 100%;
+  white-space: nowrap;
   box-sizing: border-box;
 }
 
 .filterButton {
-  margin: 0;
   padding: 0;
   border-color: transparent;
   border-radius: 0;
@@ -60,11 +57,6 @@ h3 {
 
 .filterButton ~ .filterButton {
   margin-left: 1em;
-}
-
-.filterButtonActive {
-  color: #ff6600;
-  border-bottom-color: #ff6600 !important;
 }
 
 .filterButton:hover {
@@ -82,6 +74,11 @@ h3 {
 .filterButton:focus {
   border-color: transparent;
   color: #ff6600;
+}
+
+.filterButtonActive {
+  color: #ff6600;
+  border-bottom-color: #ff6600 !important;
 }
 
 /* Larger than mobile */
