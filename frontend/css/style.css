@@ -42,9 +42,11 @@ h3 {
 #filterButtons {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  flex-wrap: nowrap;
+  /* justify-content: space-around; */
+  justify-content: center;
   overflow-x: auto;
+  overflow-y: hidden;
+  box-sizing: border-box;
 }
 
 .filterButton {
@@ -53,6 +55,7 @@ h3 {
   border-color: transparent;
   border-radius: 0;
   color: #ddd;
+  box-sizing: border-box;
 }
 
 .filterButton ~ .filterButton {
