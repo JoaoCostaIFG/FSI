@@ -185,6 +185,27 @@
       }
     },
     {
+      "name": "spellField",
+      "class": "solr.TextField",
+      "indexAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.ASCIIFoldingFilterFactory",
+            "preserveOriginal": true
+          },
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.EnglishPossessiveFilterFactory"
+          }
+        ]
+      }
+    },
+    {
       "name": "singleToken",
       "class": "solr.StrField"
     },
@@ -302,11 +323,16 @@
       "uninvertible": false
     },
     {
+<<<<<<< HEAD
       "name": "suggest",
       "type": "suggestion",
       "multiValued": true,
       "positionIncrementGap": 100,
       "uninvertible": false
+=======
+      "name": "spell",
+      "type": "spellField"
+>>>>>>> af9d716fef897e165b3836ad6f2bbf0132833052
     }
   ],
   "add-copy-field": [
@@ -340,11 +366,15 @@
     },
     {
       "source": "story_title",
+<<<<<<< HEAD
       "dest": "suggest"
     },
     {
       "source": "story_text",
       "dest": "suggest"
+=======
+      "dest": "spell"
+>>>>>>> af9d716fef897e165b3836ad6f2bbf0132833052
     }
   ]
 }
