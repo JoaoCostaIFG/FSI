@@ -32,9 +32,9 @@ curl -X POST -H 'Content-type:application/json' \
         "spellcheck": "on",
         "spellcheck.collate": "true"
       },
-    "last-components": [
-      "spellcheck"
-    ]
+      "last-components": [
+        "spellcheck"
+      ]
     },
     "update-searchcomponent": {
       "name": "spellcheck",
@@ -45,6 +45,29 @@ curl -X POST -H 'Content-type:application/json' \
         "field": "spell",
         "buildOnCommit": "true"
       }
+    },
+    "create-searchcomponent": {
+      "name": "suggester",
+      "class": "solr.SuggestComponent",
+      "suggester": {
+        "lookupImpl": "FSTLookupFactory",
+        "dictionaryImpl": "DocumentDictionaryFactory",
+        "field": "suggest",
+        "weightField": "story_score",
+        "suggestAnalyzerFieldType": "suggestion",
+        "buildOnStartup": "false"
+      }
+    },
+    "create-requesthandler": {
+      "name": "/suggest",
+      "class": "solr.SearchHandler",
+      "startup": "lazy",
+      "defaults": {
+        "suggest": "true",
+        "suggest.count": "10",
+        "suggest.build": "true",
+        "suggest.dictionary": "suggester"
+      },
     }
   }' \
   http://localhost:8983/solr/hackersearch/config
