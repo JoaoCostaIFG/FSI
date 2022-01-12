@@ -20,6 +20,11 @@ h3 {
   margin-bottom: 5px;
 }
 
+input:focus,
+select:focus {
+  border-color: #ff6600 !important;
+}
+
 #main-container {
   background-color: #1a1a1a;
 }
@@ -79,6 +84,11 @@ h3 {
 .filterButtonActive {
   color: #ff6600;
   border-bottom-color: #ff6600 !important;
+}
+
+.dropdownButton {
+  color: #ddd;
+  background-color: #0a0a0a;
 }
 
 /* Larger than mobile */
