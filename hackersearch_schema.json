@@ -169,6 +169,27 @@
       }
     },
     {
+      "name": "spellField",
+      "class": "solr.TextField",
+      "indexAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.ASCIIFoldingFilterFactory",
+            "preserveOriginal": true
+          },
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.EnglishPossessiveFilterFactory"
+          }
+        ]
+      }
+    },
+    {
       "name": "singleToken",
       "class": "solr.StrField"
     },
@@ -284,6 +305,10 @@
       "type": "text",
       "multiValued": true,
       "uninvertible": false
+    },
+    {
+      "name": "spell",
+      "type": "spellField"
     }
   ],
   "add-copy-field": [
@@ -314,6 +339,10 @@
     {
       "source": "comments.comment_text",
       "dest": "search"
+    },
+    {
+      "source": "story_title",
+      "dest": "spell"
     }
   ]
 }
