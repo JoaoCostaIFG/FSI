@@ -169,6 +169,22 @@
       }
     },
     {
+      "name": "suggestion",
+      "class": "solr.TextField",
+      "indexAnalyzer": {
+        "tokenizer": {
+          "class": "solr.KeywordTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.EdgeNGramFilterFactory",
+            "maxGramSize": "100",
+            "minGramSize": "1"
+          }
+        ]
+      }
+    },
+    {
       "name": "singleToken",
       "class": "solr.StrField"
     },
@@ -284,6 +300,13 @@
       "type": "text",
       "multiValued": true,
       "uninvertible": false
+    },
+    {
+      "name": "suggest",
+      "type": "suggestion",
+      "multiValued": true,
+      "positionIncrementGap": 100,
+      "uninvertible": false
     }
   ],
   "add-copy-field": [
@@ -314,6 +337,14 @@
     {
       "source": "comments.comment_text",
       "dest": "search"
+    },
+    {
+      "source": "story_title",
+      "dest": "suggest"
+    },
+    {
+      "source": "story_text",
+      "dest": "suggest"
     }
   ]
 }
