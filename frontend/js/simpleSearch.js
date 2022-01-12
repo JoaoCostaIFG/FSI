@@ -44,7 +44,6 @@ class State {
     this.$template = $template;
     this.filter = this.lastFilter = "all";
     this.queryData = {
-      qf: "search",
       fl: "id, story_id, story_author, story_descendants, story_score, story_time, story_title, story_text, url, url_text",
       wt: "json",
       indent: "false",
@@ -120,7 +119,34 @@ class State {
     $("#query").val(this.queryData["q"])
   }
 
-  search() {
+  advancedSearch() {
+    function setAdvQuery($input,field) {
+      if ($input.val())
+        return `+${field}:${$input.val()} `;
+      else return "";
+    }
+
+    let advQuery = "";
+    advQuery += setAdvQuery($("#advTitle"),"story_title");
+    advQuery += setAdvQuery($("#advBody"),"story_text");
+    advQuery += setAdvQuery($("#advComments"),"comments.comment_text");
+    advQuery += setAdvQuery($("#advAuthor"),"story_author");
+    advQuery += setAdvQuery($("#advUrl"),"url");
+    advQuery += setAdvQuery($("#advUrlText"),"url_text");
+
+    if (advQuery.length == 0) return;
+
+    let oldQuery = this.queryData["q"];
+    this.queryData["q"] = advQuery;
+
+    this.search(false);
+
+    this.queryData["q"] = oldQuery;
+  }
+
+  search(doSpellcheck) {
+    if (doSpellcheck === undefined) doSpellcheck = true;
+
     if (!this.queryData["q"] || this.queryData["q"].length === 0) return;
 
     // reset load button
@@ -154,11 +180,11 @@ class State {
       url: "http://localhost:8983/solr/hackersearch/select",
       dataType: "json",
       data: this.queryData,
-      success: this.renderResults.bind(this),
+      success: this.renderResults.bind(this, doSpellcheck),
     });
   }
 
-  renderResults(data) {
+  renderResults(doSpellcheck, data) {
     console.log(data);
     let response = data.response;
     let highlight = data.highlighting;
@@ -166,7 +192,9 @@ class State {
     let spellcheck = data.spellcheck.collations;
 
     let didYouMean = $("#didYouMean");
-    if (spellcheck.length >= 2) {
+    if (!doSpellcheck) {
+      didYouMean.hide();
+    } else if (spellcheck.length >= 2) {
       // has spellcheck suggestion
       didYouMean.find("a").empty().append(spellcheck[1]);
       didYouMean.show();
@@ -263,6 +291,8 @@ $(function () {
     state.setQueryStr.bind(state)($("#query").val());
     state.search.bind(state)();
   });
+
+  $("#advanced-search").click(state.advancedSearch.bind(state));
 
   state.addFilterButton($("#allFilter"), "all");
   state.addFilterButton($("#normalFilter"), "normal");

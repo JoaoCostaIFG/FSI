@@ -229,7 +229,6 @@
     {
       "name": "story_author",
       "type": "singleToken",
-      "indexed": false,
       "uninvertible": false
     },
     {
