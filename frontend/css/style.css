@@ -129,6 +129,17 @@ select:focus {
   margin-bottom: 1em;
 }
 
+#didYouMean {
+  display: block;
+  color: #ddd;
+  margin-bottom: 1em;
+}
+
+#didYouMean > span {
+  font-weight: bold;
+  font-style: italic;
+}
+
 .result ~ .result {
   margin-top: 1em;
 }

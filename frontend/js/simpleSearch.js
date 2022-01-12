@@ -72,7 +72,9 @@ class State {
   }
 
   setQueryStr(queryStr) {
+    console.log(queryStr);
     this.queryData["q"] = queryStr;
+    $("#query").val(this.queryData["q"])
   }
 
   search() {
@@ -117,6 +119,16 @@ class State {
     console.log(data);
     let response = data.response;
     let facet = data.facet_counts;
+    let spellcheck = data.spellcheck.collations;
+
+    let didYouMean = $("#didYouMean");
+    if (spellcheck.length >= 2) {
+      // has spellcheck suggestion
+      didYouMean.find("a").empty().append(spellcheck[1]);
+      didYouMean.show();
+    } else {
+      didYouMean.hide();
+    }
 
     function arrayNextElem(array, elem) {
       let idx = array.findIndex((e) => e === elem);
@@ -235,14 +247,19 @@ let state;
 $(function () {
   state = new State($("#results"), $(".template.result"));
 
-  $("#query").change(state.setQueryStr.bind(state, $("#query").val()));
-  state.setQueryStr($("#query").val());
   // performs search when 'enter' key is pressed
   $("#query").keypress(function (event) {
-    if (event.which === 13) state.search.bind(state)();
+    if (event.which === 13) {
+      state.setQueryStr.bind(state)($("#query").val());
+      state.search.bind(state)();
+    }
   });
+  state.setQueryStr($("#query").val());
 
-  $("#search").click(state.search.bind(state));
+  $("#search").click(function () {
+    state.setQueryStr.bind(state)($("#query").val());
+    state.search.bind(state)();
+  });
 
   state.addFilterButton($("#allFilter"), "all");
   state.addFilterButton($("#normalFilter"), "normal");
@@ -252,6 +269,13 @@ $(function () {
   state.addFilterButton($("#newsFilter"), "news");
 
   state.setLoadMoreButton($("#loadMore"));
+
+  let didYouMean = $("#didYouMean");
+  didYouMean.find("a").click(function () {
+    state.setQueryStr.bind(state)(didYouMean.find("a").text());
+    state.search.bind(state)();
+  })
+  didYouMean.hide();
 
   let sorts = $("#sortDropdown");
   sorts[0].options.selectedIndex = 0; // reset selected options on page load
