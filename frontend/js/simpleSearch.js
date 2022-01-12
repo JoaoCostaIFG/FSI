@@ -1,3 +1,43 @@
+class FilterButton {
+  constructor($button, filter) {
+    this.$button = $button;
+    this.filter = filter;
+    this.setCount(0);
+  }
+
+  getButton() {
+    return this.$button;
+  }
+
+  getFilter() {
+    return this.filter;
+  }
+
+  getCount() {
+    return this.count;
+  }
+
+  activate() {
+    this.$button.addClass("filterButtonActive");
+  }
+
+  deactivate() {
+    this.$button.removeClass("filterButtonActive");
+  }
+
+  setCount(count) {
+    this.count = count;
+    if (count === 0) {
+      this.$button.prop("disabled", true);
+      this.$button.find(".filterHits").empty();
+      this.deactivate();
+    } else {
+      this.$button.prop("disabled", false);
+      this.$button.find(".filterHits").empty().text(`(${count})`);
+    }
+  }
+}
+
 class State {
   constructor($container, $template) {
     this.$container = $container;
@@ -5,7 +45,7 @@ class State {
     this.filter = this.lastFilter = "all";
     this.queryData = {
       qf: "search",
-      fl: "story_id, story_author, story_descendants, story_score, story_time, story_title, story_content, url, url_text",
+      fl: "id, story_id, story_author, story_descendants, story_score, story_time, story_title, story_text, url, url_text",
       wt: "json",
       indent: "false",
       defType: "edismax",
@@ -13,6 +53,9 @@ class State {
       facet: true,
       "facet.query": "newssite_filter:news",
       "facet.field": "story_type",
+      hl: true,
+      "hl.fl": "story_title, story_text, url_text",
+      "hl.method": "unified",
     };
     this.filterButtons = new Map();
   }
@@ -118,6 +161,7 @@ class State {
   renderResults(data) {
     console.log(data);
     let response = data.response;
+    let highlight = data.highlighting;
     let facet = data.facet_counts;
     let spellcheck = data.spellcheck.collations;
 
@@ -172,72 +216,31 @@ class State {
     // the results
     this.$container.empty(); // if there are any previous results, remove them
     response.docs.forEach(function (doc, i) {
-      // small division every 10 items (load more results)
-      if (i > 0 && i % 10 == 0) {
-        this.$container.append("<hr>");
-      }
-
+      let hl = highlight[doc.id];
       let result = this.$template.clone();
+
+      // small division every 10 items (load more results)
+      if (i > 0 && i % 10 == 0) this.$container.append("<hr>");
+
+      // title
       let storyUrl = "https://news.ycombinator.com/item?id=" + doc.story_id;
-      result.find(".title > a").prop("href", storyUrl).text(doc.story_title);
+      let title = hl.story_title[0] ? hl.story_title[0] : doc.story_title;
+      result.find(".title > a").prop("href", storyUrl).append(title);
+      // url (show only the domain)
       let url = doc.url ? doc.url : storyUrl; // stome stories don't have an URL
-      result
-        .find(".url") // only the domain
-        .prop("href", url)
-        .text(`(${new URL(url).hostname})`);
-      if (doc.story_content) {
-        result.find(".content").text(maxWords(doc.story_content, 30));
-      } else if (doc.url_text) {
-        result.find(".content").text(maxWords(doc.url_text, 30));
-      }
-      result
-        .find(".result-footer")
-        .text(
-          `${doc.story_score} points | ${doc.story_author} | ${doc.story_descendants} comments`
-        );
+      result.find(".url").prop("href", url).text(`(${new URL(url).hostname})`);
+      // story content
+      let content = doc.story_text ?
+        maxWords(hl.story_text[0] ? hl.story_text[0] : doc.story_text, 30) :
+        maxWords(hl.url_text[0] ? hl.url_text[0] : doc.url_text, 30);
+      result.find(".content").append(content);
+      // footer
+      result.find(".result-footer")
+        .text(`${doc.story_score} points | ${doc.story_author} | ${doc.story_descendants} comments`);
+
       result.removeClass("template");
       this.$container.append(result);
     }, this);
-  }
-}
-
-class FilterButton {
-  constructor($button, filter) {
-    this.$button = $button;
-    this.filter = filter;
-    this.setCount(0);
-  }
-
-  getButton() {
-    return this.$button;
-  }
-
-  getFilter() {
-    return this.filter;
-  }
-
-  getCount() {
-    return this.count;
-  }
-
-  activate() {
-    this.$button.addClass("filterButtonActive");
-  }
-
-  deactivate() {
-    this.$button.removeClass("filterButtonActive");
-  }
-
-  setCount(count) {
-    this.count = count;
-    if (count === 0) {
-      this.$button.prop("disabled", true);
-      this.$button.find(".filterHits").empty();
-      this.deactivate();
-    } else {
-      this.$button.prop("disabled", false);
-      this.$button.find(".filterHits").empty().text(`(${count})`);
-    }
   }
 }
 

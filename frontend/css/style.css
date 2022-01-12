@@ -17,7 +17,13 @@ h1 {
 h3 {
   font-size: 135%;
   font-weight: 400;
-  margin-bottom: 5px;
+  margin-bottom: 0.3em;
+}
+
+em {
+  font-weight: bold;
+  font-style: italic;
+  color: #b0764f;
 }
 
 input:focus,
