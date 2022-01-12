@@ -27,8 +27,14 @@ curl -X POST -H 'Content-type:application/json' \
       "defaults": {
         "wt": "json", 
         "indent": true,
-        "df": "search"
+        "df": "search",
+        "rows": 10,
+        "spellcheck": "on",
+        "spellcheck.collate": "true"
       },
+    "last-components": [
+      "spellcheck"
+    ]
     },
     "update-searchcomponent": {
       "name": "spellcheck",

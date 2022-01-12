@@ -171,6 +171,7 @@
     {
       "name": "suggestion",
       "class": "solr.TextField",
+      "positionIncrementGap": 100,
       "indexAnalyzer": {
         "tokenizer": {
           "class": "solr.KeywordTokenizerFactory"
@@ -323,16 +324,14 @@
       "uninvertible": false
     },
     {
-<<<<<<< HEAD
       "name": "suggest",
       "type": "suggestion",
       "multiValued": true,
-      "positionIncrementGap": 100,
       "uninvertible": false
-=======
+    },
+    {
       "name": "spell",
       "type": "spellField"
->>>>>>> af9d716fef897e165b3836ad6f2bbf0132833052
     }
   ],
   "add-copy-field": [
@@ -366,15 +365,15 @@
     },
     {
       "source": "story_title",
-<<<<<<< HEAD
       "dest": "suggest"
     },
     {
       "source": "story_text",
       "dest": "suggest"
-=======
+    },
+    {
+      "source": "story_title",
       "dest": "spell"
->>>>>>> af9d716fef897e165b3836ad6f2bbf0132833052
     }
   ]
 }
