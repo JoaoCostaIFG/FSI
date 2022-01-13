@@ -18,6 +18,19 @@ def ap(docs, n=10):
     return sum(precision_values) / len(precision_values)
 
 
+def ap(docs, n=10):
+    """Average Precision"""
+    precision_values = [
+        len([
+            doc
+            for doc in docs[:idx]
+            if doc["relevant"] == "true"
+        ]) / idx
+        for idx in range(1, n + 1)
+    ]
+    return sum(precision_values) / len(precision_values)
+
+
 def p10(docs, n=10):
     """Precision at N"""
     return len([doc for doc in docs[:n] if doc['relevant'] == "true"]) / n
@@ -118,7 +131,7 @@ def plot_recall_precision(recalls_precisions, legends=[], markers=["s", "o", "^"
 
     plt.gca().legend((legends))
     plt.tight_layout()
-    plt.savefig("precision_recall")
+    plt.savefig("precision_recall", bbox_inches='tight')
     plt.show()
 
 

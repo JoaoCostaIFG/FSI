@@ -47,14 +47,14 @@ curl -X POST -H 'Content-type:application/json' \
       }
     },
     "create-searchcomponent": {
-      "name": "suggester",
+      "name": "suggest",
       "class": "solr.SuggestComponent",
       "suggester": {
-        "lookupImpl": "FSTLookupFactory",
+        "name": "mySuggester",
+        "lookupImpl": "AnalyzingInfixLookupFactory",
         "dictionaryImpl": "DocumentDictionaryFactory",
-        "field": "suggest",
-        "weightField": "story_score",
-        "suggestAnalyzerFieldType": "suggestion",
+        "field": "story_title",
+        "suggestAnalyzerFieldType": "suggestion_type",
         "buildOnStartup": "false"
       }
     },
@@ -65,9 +65,11 @@ curl -X POST -H 'Content-type:application/json' \
       "defaults": {
         "suggest": "true",
         "suggest.count": "10",
-        "suggest.build": "true",
-        "suggest.dictionary": "suggester"
+        "suggest.dictionary": "mySuggester"
       },
+      components: [
+        "suggest"
+      ]
     }
   }' \
   http://localhost:8983/solr/hackersearch/config
