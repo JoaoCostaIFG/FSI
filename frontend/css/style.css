@@ -40,6 +40,7 @@ select:focus {
 }
 
 #search,
+#advanced-search,
 #loadMore {
   color: #ddd;
   background-color: #0a0a0a;
