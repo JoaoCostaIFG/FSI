@@ -173,19 +173,17 @@
       "class": "solr.TextField",
       "positionIncrementGap": 100,
       "indexAnalyzer": {
-        "charFilter": [
-          {
-            "class": "solr.PatternReplaceCharFilterFactory",
-            "pattern": "[^a-zA-Z0-9]",
-            "replacement": " "
-          }
-        ],
         "tokenizer": {
-          "class": "solr.WhitespaceTokenizerFactory"
+          "class": "solr.StandardTokenizerFactory"
         },
         "filters": [
           {
             "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.PatternReplaceFilterFactory",
+            "pattern": "[^a-zA-Z0-9]",
+            "replacement": ""
           }
         ]
       }
@@ -330,6 +328,10 @@
     {
       "name": "spell",
       "type": "spellField"
+    },
+    {
+      "name": "sugg",
+      "type": "suggestion_type"
     }
   ],
   "add-copy-field": [
@@ -364,6 +366,10 @@
     {
       "source": "story_title",
       "dest": "spell"
+    },
+    {
+      "source": "story_title",
+      "dest": "sugg"
     }
   ]
 }

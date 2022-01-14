@@ -49,14 +49,24 @@ curl -X POST -H 'Content-type:application/json' \
     "create-searchcomponent": {
       "name": "suggest",
       "class": "solr.SuggestComponent",
-      "suggester": {
-        "name": "mySuggester",
-        "lookupImpl": "AnalyzingInfixLookupFactory",
-        "dictionaryImpl": "DocumentDictionaryFactory",
-        "field": "story_title",
-        "suggestAnalyzerFieldType": "suggestion_type",
-        "buildOnStartup": "false"
-      }
+      "suggester": [
+        {
+          "name": "mySuggester",
+          "lookupImpl": "AnalyzingInfixLookupFactory",
+          "dictionaryImpl": "DocumentDictionaryFactory",
+          "field": "sugg",
+          "suggestAnalyzerFieldType": "suggestion_type",
+          "buildOnStartup": "true"
+        },
+        {
+          "name": "altSuggester",
+          "lookupImpl": "FreeTextLookupFactory",
+          "dictionaryImpl": "DocumentDictionaryFactory",
+          "field": "sugg",
+          "suggestFreeTextAnalyzerFieldType": "suggestion_type",
+          "buildOnStartup": "true"
+        }
+      ]
     },
     "create-requesthandler": {
       "name": "/suggest",
@@ -64,8 +74,8 @@ curl -X POST -H 'Content-type:application/json' \
       "startup": "lazy",
       "defaults": {
         "suggest": "true",
-        "suggest.count": "10",
-        "suggest.dictionary": "mySuggester"
+        "suggest.count": "8",
+        "suggest.dictionary": ["mySuggester", "altSuggester"]
       },
       components: [
         "suggest"

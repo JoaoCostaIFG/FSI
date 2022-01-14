@@ -116,23 +116,22 @@ class State {
   setQueryStr(queryStr) {
     console.log(queryStr);
     this.queryData["q"] = queryStr;
-    $("#query").val(this.queryData["q"])
+    $("#query").val(this.queryData["q"]);
   }
 
   advancedSearch() {
-    function setAdvQuery($input,field) {
-      if ($input.val())
-        return `+${field}:${$input.val()} `;
+    function setAdvQuery($input, field) {
+      if ($input.val()) return `+${field}:${$input.val()} `;
       else return "";
     }
 
     let advQuery = "";
-    advQuery += setAdvQuery($("#advTitle"),"story_title");
-    advQuery += setAdvQuery($("#advBody"),"story_text");
-    advQuery += setAdvQuery($("#advComments"),"comments.comment_text");
-    advQuery += setAdvQuery($("#advAuthor"),"story_author");
-    advQuery += setAdvQuery($("#advUrl"),"url");
-    advQuery += setAdvQuery($("#advUrlText"),"url_text");
+    advQuery += setAdvQuery($("#advTitle"), "story_title");
+    advQuery += setAdvQuery($("#advBody"), "story_text");
+    advQuery += setAdvQuery($("#advComments"), "comments.comment_text");
+    advQuery += setAdvQuery($("#advAuthor"), "story_author");
+    advQuery += setAdvQuery($("#advUrl"), "url");
+    advQuery += setAdvQuery($("#advUrlText"), "url_text");
 
     if (advQuery.length == 0) return;
 
@@ -189,7 +188,10 @@ class State {
     let response = data.response;
     let highlight = data.highlighting;
     let facet = data.facet_counts;
-    let spellcheck = data.spellcheck.collations;
+    // only use spellcheck if there's any
+    let spellcheck;
+    if (data.spellcheck === undefined) doSpellcheck = false;
+    else spellcheck = data.spellcheck.collations;
 
     let didYouMean = $("#didYouMean");
     if (!doSpellcheck) {
@@ -256,15 +258,21 @@ class State {
       result.find(".title > a").prop("href", storyUrl).append(title);
       // url (show only the domain)
       let url = doc.url ? doc.url : storyUrl; // stome stories don't have an URL
-      result.find(".url").prop("href", url).text(`(${new URL(url).hostname})`);
+      result
+        .find(".url")
+        .prop("href", url)
+        .text(`(${new URL(url).hostname})`);
       // story content
-      let content = doc.story_text ?
-        maxWords(hl.story_text[0] ? hl.story_text[0] : doc.story_text, 30) :
-        maxWords(hl.url_text[0] ? hl.url_text[0] : doc.url_text, 30);
+      let content = doc.story_text
+        ? maxWords(hl.story_text[0] ? hl.story_text[0] : doc.story_text, 30)
+        : maxWords(hl.url_text[0] ? hl.url_text[0] : doc.url_text, 30);
       result.find(".content").append(content);
       // footer
-      result.find(".result-footer")
-        .text(`${doc.story_score} points | ${doc.story_author} | ${doc.story_descendants} comments`);
+      result
+        .find(".result-footer")
+        .text(
+          `${doc.story_score} points | ${doc.story_author} | ${doc.story_descendants} comments`
+        );
 
       result.removeClass("template");
       this.$container.append(result);
@@ -291,6 +299,8 @@ $(function () {
     state.setQueryStr.bind(state)($("#query").val());
     state.search.bind(state)();
   });
+  $("#query").on("keyup", suggestions);
+  suggestions();
 
   $("#advanced-search").click(state.advancedSearch.bind(state));
 
@@ -307,13 +317,43 @@ $(function () {
   didYouMean.find("a").click(function () {
     state.setQueryStr.bind(state)(didYouMean.find("a").text());
     state.search.bind(state)();
-  })
+  });
   didYouMean.hide();
 
   let sorts = $("#sortDropdown");
   sorts[0].options.selectedIndex = 0; // reset selected options on page load
   sorts.change(state.search.bind(state));
 });
+
+function suggestions() {
+  let val = $("#query").val();
+  if (val.length === 0) {
+    $("#suggestions").empty();
+    $("#altSuggestions").empty();
+    return;
+  }
+  $.ajax({
+    type: "GET",
+    url: "http://localhost:8983/solr/hackersearch/suggest",
+    dataType: "json",
+    data: { q: val },
+    success: function (data) {
+      let suggBox = $("#suggestions");
+      suggBox.empty();
+      let suggs = data.suggest.mySuggester[val];
+      for (let i = 0; i < suggs.numFound; ++i) {
+        suggBox.append(`<p>${suggs.suggestions[i].term}</p>`);
+      }
+
+      let altSuggBox = $("#altSuggestions");
+      altSuggBox.empty();
+      let altSuggs = data.suggest.altSuggester[val];
+      for (let i = 0; i < altSuggs.numFound; ++i) {
+        altSuggBox.append(`<span>${altSuggs.suggestions[i].term}  </span>`);
+      }
+    },
+  });
+}
 
 // Cuts off lengthy content to a given maximum number of words
 // Input: string of words, maximum number of words
