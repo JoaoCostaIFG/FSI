@@ -1,1 +1,5 @@
-version control => version control
+version control => version|2.0 control|2.0, git, github, gitlab, bitbucket, cvs, svn, mercurial
+git => version control, git|2.0, github, gitlab, bitbucket
+github => version control, git, github|2.0, gitlab, bitbucket
+gitlab => version control, git, github, gitlab|2.0, bitbucket
+bitbucket => version control, git, github, gitlab, bitbucket|2.0

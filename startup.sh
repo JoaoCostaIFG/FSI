@@ -56,7 +56,7 @@ curl -X POST -H 'Content-type:application/json' \
           "dictionaryImpl": "DocumentDictionaryFactory",
           "field": "sugg",
           "suggestAnalyzerFieldType": "suggestion_type",
-          "buildOnStartup": "true"
+          "buildOnCommit": "true"
         },
         {
           "name": "altSuggester",
@@ -64,7 +64,7 @@ curl -X POST -H 'Content-type:application/json' \
           "dictionaryImpl": "DocumentDictionaryFactory",
           "field": "sugg",
           "suggestFreeTextAnalyzerFieldType": "suggestion_type",
-          "buildOnStartup": "true"
+          "buildOnCommit": "true"
         }
       ]
     },
@@ -80,6 +80,18 @@ curl -X POST -H 'Content-type:application/json' \
       components: [
         "suggest"
       ]
+    },
+    "create-requesthandler": {
+      "name": "/mlt",
+      "class": "solr.MoreLikeThisHandler",
+      "defaults": {
+        "mlt.fl": "story_title, story_text, story_type, url",
+        "mlt.mintf": 1,
+        "mlt.maxdfpct": 50,
+        "mlt.minwl": 2,
+        "mlt.match.include": false,
+        "mlt.interestingTerms": "list"
+      }
     }
   }' \
   http://localhost:8983/solr/hackersearch/config

@@ -1,4 +1,4 @@
-FROM solr:8.10
+FROM solr:8.11.1
 
 COPY ./web.xml /opt/solr/server/solr-webapp/webapp/WEB-INF/web.xml
 

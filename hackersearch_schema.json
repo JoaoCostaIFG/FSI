@@ -17,10 +17,19 @@
           },
           {
             "class": "solr.SynonymGraphFilterFactory",
-            "synonyms": "/var/solr/data/hackersearch/mysynonyms.txt"
+            "synonyms": "/var/solr/data/hackersearch/mysynonyms.txt",
+            "tokenizerFactory": {
+              "class": "solr.PatternTokenizerFactory",
+              "pattern": "(.*?)(,\\s|$)",
+              "group": 1
+            }
           },
           {
             "class": "solr.FlattenGraphFilterFactory"
+          },
+          {
+            "class": "solr.DelimitedBoostTokenFilterFactory",
+            "delimiter": "|"
           },
           {
             "class": "solr.PorterStemFilterFactory"
@@ -56,10 +65,19 @@
           },
           {
             "class": "solr.SynonymGraphFilterFactory",
-            "synonyms": "/var/solr/data/hackersearch/mysynonyms.txt"
+            "synonyms": "/var/solr/data/hackersearch/mysynonyms.txt",
+            "tokenizerFactory": {
+              "class": "solr.PatternTokenizerFactory",
+              "pattern": "(.*?)(,\\s|$)",
+              "group": 1
+            }
           },
           {
             "class": "solr.FlattenGraphFilterFactory"
+          },
+          {
+            "class": "solr.DelimitedBoostTokenFilterFactory",
+            "delimiter": "|"
           },
           {
             "class": "solr.PorterStemFilterFactory"
@@ -82,7 +100,7 @@
       "indexAnalyzer": {
         "tokenizer": {
           "class": "solr.PatternTokenizerFactory",
-          "pattern": "([a-zA-Z0-9]*)\\..*",
+          "pattern": "([a-zA-Z0-9]+?)\\.",
           "group": 1
         },
         "filters": [
@@ -226,7 +244,6 @@
     {
       "name": "story_id",
       "type": "int",
-      "indexed": false,
       "uninvertible": false
     },
     {
@@ -255,21 +272,25 @@
     {
       "name": "story_title",
       "type": "title",
-      "uninvertible": false
+      "uninvertible": false,
+      "termVectors": true
     },
     {
       "name": "story_text",
       "type": "text",
-      "uninvertible": false
+      "uninvertible": false,
+      "termVectors": true
     },
     {
       "name": "story_type",
-      "type": "category"
+      "type": "category",
+      "termVectors": true
     },
     {
       "name": "url",
       "type": "url",
-      "uninvertible": false
+      "uninvertible": false,
+      "termVectors": true
     },
     {
       "name": "url_text",
@@ -327,11 +348,13 @@
     },
     {
       "name": "spell",
-      "type": "spellField"
+      "type": "spellField",
+      "stored": false
     },
     {
       "name": "sugg",
-      "type": "suggestion_type"
+      "type": "suggestion_type",
+      "stored": false
     }
   ],
   "add-copy-field": [
