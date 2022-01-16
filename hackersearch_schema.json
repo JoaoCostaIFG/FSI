@@ -348,13 +348,11 @@
     },
     {
       "name": "spell",
-      "type": "spellField",
-      "stored": false
+      "type": "spellField"
     },
     {
       "name": "sugg",
-      "type": "suggestion_type",
-      "stored": false
+      "type": "suggestion_type"
     }
   ],
   "add-copy-field": [
