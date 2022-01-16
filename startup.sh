@@ -56,7 +56,7 @@ curl -X POST -H 'Content-type:application/json' \
           "dictionaryImpl": "DocumentDictionaryFactory",
           "field": "sugg",
           "suggestAnalyzerFieldType": "suggestion_type",
-          "buildOnCommit": "true"
+          "buildOnStartup": "true"
         },
         {
           "name": "altSuggester",
@@ -64,7 +64,7 @@ curl -X POST -H 'Content-type:application/json' \
           "dictionaryImpl": "DocumentDictionaryFactory",
           "field": "sugg",
           "suggestFreeTextAnalyzerFieldType": "suggestion_type",
-          "buildOnCommit": "true"
+          "buildOnStartup": "true"
         }
       ]
     },

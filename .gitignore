@@ -5,5 +5,6 @@ html_content.json
 data.db
 data/*
 hackersearch.json
+hackersearch.json.bak
 hackersearch_bak.json
 hackersearch_bak2.json
