@@ -87,33 +87,14 @@ curl -X POST -H 'Content-type:application/json' \
       "defaults": {
         "mlt.fl": "story_title, story_text, story_type, url",
         "mlt.mintf": 1,
-        "mlt.maxdfpct": 50,
-        "mlt.minwl": 2,
+        "mlt.maxdfpct": 10,
+        "mlt.minwl": 3,
         "mlt.match.include": false,
         "mlt.interestingTerms": "list"
       }
     }
   }' \
   http://localhost:8983/solr/hackersearch/config
-
-    # "update-searchcomponent": {
-      # "name": "spellcheck",
-      # "class": "solr.SpellCheckComponent",
-      # "spellchecker": {
-        # "name": "default",
-        # "field": "spell",
-        # "classname": "solr.DirectSolrSpellChecker",
-        # "distanceMeasure": "internal",
-        # "accuracy": 0.5
-        # "maxEdits": 2,
-        # "minPrefix": 1,
-        # "maxInspections": 5,
-        # "minQueryLength": 4,
-        # "maxQueryLength": 40,
-        # "maxQueryFrequency": 0.01,
-        # "thresholdTokenFrequency": 0.01
-      # }
-    # }
 
 # populate collection
 bin/post -c hackersearch /data/hackersearch.json

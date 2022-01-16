@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 IFS=$'\n'
 for title in $(jq -r '.response.docs[].story_title' $1); do
