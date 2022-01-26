@@ -1,9 +1,5 @@
 # PRI 2021/2022
 
-## Manning
-
-Chapters 1, 2, 6, 8, 19, and 21.
-
 ## IR concepts
 
 - **Information retrieval (IR)** - is finding material (usually documents) of an
@@ -14,6 +10,15 @@ Chapters 1, 2, 6, 8, 19, and 21.
 - **grepping** - linear scan through documents.
 - **index** - para cada termo (palavra) dizer se existe num documento =>
   **binary term-document _incidence matrix_**
+
+### Modules
+
+- **Crawling module** - crawls through a set of objects to gather information;
+- **Indexing module** - based on the collection documents will index them;
+- **Ranking and retrieval module** - based on **IN** (expressed as a query),
+  evaluates and ranks the possible results and retrieves them to the user.
+- **? Search user interface** - The interface to interact with the system can be
+  considered a module.
 
 ### Binary term-document _incidence matrix_
 
@@ -349,7 +354,7 @@ AvP = (1 + 0.67 + 0.75 + 0.8 + 0.83 + 0.6) / 6
     isn't a single source of relevant info (users gather info from multiple web
     pages).
   - **Navigational queries** - seek the website or home page of a single entity.
-    Users want a to find a specific resource.
+    Users want a to find a specific resource (**Can be cached**).
   - **Transactional queries** - preludes the user performing a transaction on
     the web.
 
@@ -357,8 +362,10 @@ AvP = (1 + 0.67 + 0.75 + 0.8 + 0.83 + 0.6) / 6
 
 - Used to estimate quality.
 - Different dimensions:
-  - query-independent (**static**);
-  - query-dependent (**dynamic**);
+  - query-independent (**static**): titulo, autor, data da ultima modificacao do
+    doc;
+  - query-dependent (**dynamic**): hora da query, posiçao geografica do user,
+    info sobre o user;
   - document-based (content or structural), e.g.: HTML;
   - Collection-based, e.g.: Links;
   - User-based, e.g.: Clicks;
@@ -374,7 +381,7 @@ AvP = (1 + 0.67 + 0.75 + 0.8 + 0.83 + 0.6) / 6
 
 - A large percentage of content on the web are near-duplicates (only small
   differences);
-- Standard duplciate detection doesn't work (e.g. fingerprinting);
+- Standard duplicate detection doesn't work (e.g. fingerprinting);
 - Crawlers need to decide if new pages are duplicates of existing content and if
   page being revisited have changed (estimate change rate);
 - Solution: **shingles**
@@ -397,7 +404,29 @@ AvP = (1 + 0.67 + 0.75 + 0.8 + 0.83 + 0.6) / 6
   the web graph;
 - Simulate random surfer that begins at a web page and randomly chooses an
   out-link to move to next. If this goes on forever, some pages are visited more
-  frequently.
+  frequently;
+- If surfer is stuck (no out-links), teleports to a random page from all pages
+  (equal probability for all, includingcurrent position). Surfer also teleports
+  if it is not stuck with probability æ (usually 0.1).
+
+##### Example
+
+1. Começar numa pagina (primeira) com 100% e o resto tudo a 0, ou, começar na
+   primeira com todas as páginas a igual percentagem.
+2. Ver as probabilidades de a partir da pagina atual ir para cada uma das
+   outras.
+3. Ver as pagina que têm prob > 0 agora e onde ligam.
+4. repetir a partir de **2**.
+
+```
+C <- A -> B
+       <-
+
+| 100 | 0  | 0  |
+| 0   | 50 | 50 |
+| 50  | 0  | 50 |
+| 0   | 25 | 75 |
+```
 
 #### HITS
 
@@ -407,6 +436,20 @@ AvP = (1 + 0.67 + 0.75 + 0.8 + 0.83 + 0.6) / 6
   - Pages with many links pointing to them are **authorities**;
   - Pages with many outgoing links are called **hubs**;
 
+##### Example
+
+1. `h(v) = a(v) = 1`; para todos nodes v;
+2. `a(v) = soma dos h(y) em que y aponta para v`;
+3. `h(v) = soma das a(y) em que v aponta para y`;
+4. normalize **a** e **h**:
+
+- $\sum{\frac{a(v)}{c}^2} = 1 <=> c = \sqrt{\sum{a(v)^2}}$, para todos os **v**
+  => dividir todos os $a(v)$ por $c$.
+- $\sum{\frac{h(v)}{c}^2} = 1 <=> c = \sqrt{\sum{h(v)^2}}$, para todos os **v**
+  => dividir todos os $h(v)$ por $c$.
+
+5. repeat from **2**.
+
 ### Anchor text as a Signal
 
 - The text in HTML anchors;
@@ -414,3 +457,150 @@ AvP = (1 + 0.67 + 0.75 + 0.8 + 0.83 + 0.6) / 6
 - The collection of all anchor texts can be explored with standard IR techniques
   and incorporated as an additional feature in an inverted index: **important
   feature for image search**.
+
+## Query processing
+
+- **Document-at-a-time** - calculates complete scores for documents by
+  processing all term lists, one document at a time. Documents sorted according
+  to their score at the end (otimizar documentos no fim da lista se os docs
+  estiverem ordenados por alguma metrica).
+- **Term-at-a-time** - accumulates scores for documents by processing term lists
+  one at a time. When all terms are processed, the accumulators contain the
+  final scores of all matching documents (otimizar ignorando stop words).
+- **Optimization (2 classes)**:
+  - **read less data** from the index;
+  - **process fewer** documents.
+
+### Conjunctive processing
+
+- Base assumption: so retornar docs que contêm todos os query terms (default em
+  web search e esperado pelos users).
+- Funciona melhor quando 1 dos termos é raro (skip de parte da inverted list).
+- Short queries beneficio de efficiencia e effectiveness.
+- Long queries n são bons candidatos.
+
+## Relevance Feedback
+
+- Exact matches aren't the only way to obtain relevant results;
+- Vocabulary mismatch between the user and the collection, e.g. synonyms exit.
+- System side techniques:
+  - global methods expand or reformulate the query terms indenpendently of the
+    query or the results: thesaurus + spell correction;
+  - local methods adjust a query relative to the documents that initially
+    appear: relevance feedback + pseudo-relevance feedback.
+
+### Query expansion
+
+- Usar synonyms e palavras relacionadas (thesaurus) para generar queries
+  alternativas.
+
+### Relevance feedback (e.g. Rocchio)
+
+- User faz short, simple query.
+- User seleciona os relevantes dos resultados inciais dessa query.
+- Sistema usa essa info para refinar a query.
+- Pode repetir ad nauseam.
+- Idea: it is difficult to formulate a good query when you don't know the
+  collection.
+- Useful for image search (images can be hard to describe).
+- Can improve both recall and precision, but in practice is more useful for
+  increasing recall (users only take the time to refine the query when they want
+  to see an high number of relevant documents).
+- Positive feedback is more useful like negative (many systems only allow
+  positive feedback).
+
+#### Limitations
+
+- Misspellings + Cross-language retrieval + Vocabulary mismatch;
+- Users don't like to provide explicit feedback (they expect single
+  interaction);
+- It is often harder to understand why a particular document was retrieved after
+  relevance feedback was applied.
+
+### Pseudo Relevance feedback
+
+- Automate manual parts of the process;
+- Assume top k ranked documents are relevant and apply relevance feedback
+  algorithm under this assumption.
+
+## Entity Search
+
+- **Knowledge bases** - large scale structured knowledge repositories. Organizam
+  info a volta de objectos chamados **entities**;
+- **Entities** - UID, Name(s), Type(s), Attributes, Relationships;
+- **RDF**: **Subject (URI)** -**Predicate (URI de relationship or property)**->
+  **Object (URI or literal)**.
+
+### Entity-Oriented Search
+
+- Search paradigm of organizing and accessing information centered around
+  entities (their attributes and relationships);
+- From a user prespective, entities are natural units for organizing
+  information. Allowing users to interact with specific entities offers a richer
+  and more effective user experience than document-based search.
+- From a machine perspective, entities allow for a better understanding of
+  search queries, document content, and users.
+
+### Data
+
+- **Unstructued data** - can be found in a vast quatity of forms: web pages,
+  spreadsheets, emails, tweets, etc... All of these can be treated as sequence
+  of words.
+- **Semi-structured data** - characterized by the lack of rigid, formal
+  structure. Normalmente tem tags/markup que separa conteudo textual dos
+  elementos semanticos (e.g. HTML data).
+- **Structured data** - adheres to a predefined (fixed) schema and is typically
+  organized in a tabular format (e.g. relation databases). O schema define a
+  organização e impõe contraints para garantir consistencia.
+
+### Tasks Entity-oriented Search
+
+- **Entity Retrieval** - 40% to 70% of web queries target/mention specific
+  entity;
+- **Entity Linking** - entities for knowledge representation;
+- **Entities for an enhanced user experience**.
+
+### Ad Hoc Entity Retrieval Task
+
+- Ad Hoc as in the user initiated the search process by formulating and issuing
+  a query.
+- **Main strategy** - criar **profile document** paracada entity com o knowledge
+  sobre ela e fazer pesquisa como se fosse **document search**.
+
+#### Profile document
+
+- Contains all information we have about that entity;
+- Serve como representação textual do documento, a **entity description**;
+- Queremos um vector pesado de termos;
+- Entity components:
+  - **Entity length** - total number of terms in the entity description;
+  - **Term frequency (TF)** - normalized term count (by length) in the entity
+    description;
+  - **Entity frequency (EF)** - number of entities in which the term occurs;
+  - **Inverse entity frequency (IEF)** - log normalized ration between the total
+    number of entities in the catalog, and the entity frequency.
+
+Para dados **semi-estruturados** cada entidade/relação torna-se num field. É
+importante ter um catch-all field. Não consideramos todas as relações (pk são
+muitas), juntámos essas relações numa só (**triples**). Algumas relações é
+dificil extrair texto então vamos buscar a `<foam:name>` ou `<rdfs:label>`.
+
+**Ranking** é feito como em documentos mas trocando por entity nas equações.
+
+### Entity Linking
+
+- Recognizing entity mentions in text and linking them to the corresponding
+  entries in a KB:
+  1. Mention detection;
+  2. Candidate selection;
+  3. Disambiguation;
+
+## Search User Interfaces
+
+- The HCI community has developed the DECIDE process to help on this decision:
+  - **D** - **Determine** the goals of the evaluation;
+  - **E** - **Explore** the specific questions to be answered;
+  - **C** - **Choose** an evaluation paradigm;
+  - **I** - **Identify** pratical issues in performing the evaluation;
+  - **D** - **Decide** how to deal with any ethical issues;
+  - **E** - **Evaluate**, interpret, and present the data.
