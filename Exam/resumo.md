@@ -336,7 +336,8 @@ Recall e precision dão tradeoff uma contra a outra:
 ### F Measure
 
 - Weighted harmonic mean of recall and precision.
-- **F1** - æ = 1/2; ẞ = 1 - default balanced F measure - $\frac{2*P*R}{P + R}$
+- **F1:** $\alpha$ = 1/2; $\beta$ = 1 - default balanced F measure -
+  $\frac{2*P*R}{P + R}$
 - Harmonic mean é usada porque a arithmetic mean dá 50% quando pomos, por
   exemplo, o recall a 100% (retrieve de tudo).
 - Harmonic mean dá um resultado mais próximo do mínimo.
@@ -366,14 +367,10 @@ Recall e precision dão tradeoff uma contra a outra:
 - Média aritmetica da precisão para os recall correspondentes a documentos
   relevantes.
 
-```
-|-----|------|------|------|------|------|------|------|------|------|-----|
 | --- | X    |      | X    | X    | X    | X    |      |      |      | X   |
-|=====|======|======|======|======|======|======|======|======|======|=====|
+| --- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | --- |
 | R   | 0.17 | 0.17 | 0.33 | 0.5  | 0.67 | 0.83 | 0.83 | 0.83 | 0.83 | 1.0 |
 | P   | 1.0  | 0.5  | 0.67 | 0.75 | 0.8  | 0.83 | 0.71 | 0.63 | 0.56 | 0.6 |
-|-----|------|------|------|------|------|------|------|------|------|-----|
-```
 
 AvP = $\frac{1 + 0.67 + 0.75 + 0.8 + 0.83 + 0.6}{6}$
 
@@ -394,10 +391,10 @@ AvP = $\frac{1 + 0.67 + 0.75 + 0.8 + 0.83 + 0.6}{6}$
 ### R-Precision
 
 - Resolve o Problema de P@K.
-- The number of relevant documents, R, is used as a cutoff (varia entre
+- The **number of relevant documents, R, is used as a cutoff** (varia entre
   queries).
-- Vamos buscar o top R documentos para a query.
-- Vemos quantos são relevantes => r.
+- Vamos buscar o **top R documentos para a query**.
+- Vemos **quantos são relevantes => r**.
 - `R-Precision` = $\frac{r}{R}$
 - Intimamente ligada a map.
 
@@ -479,10 +476,16 @@ AvP = $\frac{1 + 0.67 + 0.75 + 0.8 + 0.83 + 0.6}{6}$
 
 ### Web crawling
 
-- Musts: **robust** to problems and traps + **politeness** to web hosts;
-- Shoulds: **distributed** execution + **scalable** + **efficient** + **bias
-  towards good quality pages** + **freshness** depending on page **change
-  rate** + **extensible**
+- Musts:
+  - **robust** to problems and traps
+  - **politeness** to web hosts;
+- Shoulds:
+  - **distributed** execution
+  - **scalable**
+  - **efficient**
+  - **bias towards good quality pages**
+  - **freshness** depending on page **change rate**
+  - **extensible**
 
 #### Near-duplicate detection
 
@@ -635,7 +638,8 @@ C <- A -> B
 - **Knowledge bases** - large scale structured knowledge repositories. Organizam
   info a volta de objectos chamados **entities**;
 - **Entities** - UID, Name(s), Type(s), Attributes, Relationships;
-- **RDF**: **Subject (URI)** -**Predicate (URI de relationship or property)**->
+- **RDF**: **Subject (URI)**  
+  -**Predicate (URI de relationship or property)**->  
   **Object (URI or literal)**.
 
 ### Entity-Oriented Search
@@ -687,20 +691,34 @@ C <- A -> B
   - **Inverse entity frequency (IEF)** - log normalized ration between the total
     number of entities in the catalog, and the entity frequency.
 
-Para dados **semi-estruturados** cada entidade/relação torna-se num field. É
-importante ter um catch-all field. Não consideramos todas as relações (pk são
-muitas), juntámos essas relações numa só (**triples**). Algumas relações é
-dificil extrair texto então vamos buscar a `<foam:name>` ou `<rdfs:label>`.
+Para dados **semi-estruturados** cada entidade/relação torna-se num field:
 
-**Ranking** é feito como em documentos mas trocando por entity nas equações.
+- É importante ter um catch-all field.
+- Não consideramos todas as relações (pk são muitas) => **predicate folding**;
+- **Predicate folding** - group predicates together into a small set of
+  predefined categories;
+- Algumas relações é dificil extrair texto (as que não são literais) então vamos
+  buscar a `<foam:name>` ou `<rdfs:label>`.
+
+### Entity Ranking
+
+- É feito como em documentos mas trocando por entity nas equações;
+- Ad-hoc entity retrival é analoga a ad-hoc doc retrieval;
+- Usamos métricas do costume;
+- A dificuldade está em criar term-based representations das entidades;
+- Bag-of-words tmb funciona bem => bom starting point.
 
 ### Entity Linking
 
-- Recognizing entity mentions in text and linking them to the corresponding
-  entries in a KB:
-  1. Mention detection;
-  2. Candidate selection;
-  3. Disambiguation;
+Recognizing entity mentions in text and linking them to the corresponding
+entries in a knowledge base.
+
+1. Mention detection - identificação de snippets de texto que possam ser
+   potencialmente ligados a entidades. E.g. Surface form dict em que verificamos
+   todos os n-grams;
+2. Candidate selection - gerar um set de entidades candidatas para cada mention;
+3. Disambiguation - selecionar uma única (out nenhuma) entidade para cada menção
+   (baseado no contexto).
 
 ## Search User Interfaces
 
