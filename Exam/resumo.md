@@ -150,8 +150,8 @@ Q: `Brutus AND Calpurnia`
 
 ### Inverse Document Frequency (idf)
 
-- **Inverse Document Frequency (idf)** - `log(N/df)`, where `N` é o numero de
-  documentos na coleção.
+- **Inverse Document Frequency (idf)** - $log(\frac{N}{df})$, where `N` é o
+  numero de documentos na coleção.
 - Incorporated in the weight of a term.
 - Quanto mais raro um termo numa coleção, maior o seu **idf**.
 - Documento que aparece em todo o lado => **0**.
@@ -181,7 +181,7 @@ Para cada **term** (por ordem alfabética), pegamos no **td-idf** deles
 - Similaridade entre documentos é o cosseno do ângulo formado pelas suas
   representações vetoriais.
 - Isto compensa contra o efeito do comprimento do documento.
-- `sim(d1, d2) = (V(d1) . V(d2))/(|V(d1)| * |V(d2)|)`
+- $sim(d1, d2) = \frac{V(d1) . V(d2)}{|V(d1)| * |V(d2)|}$
 - Maior => mais similares.
 
 ### Queries as Vectors
@@ -199,7 +199,7 @@ Para cada **term** (por ordem alfabética), pegamos no **td-idf** deles
 ### Bigram
 
 - Apoia na probabilidade do **term** anterior.
-- `Pbigram(t1 t2 t3 t4) = P(t1) * P(t2|t1) * P(t3|t2) * P(t4|t3)`
+- $P_{bigram}(t1 . t2 . t3 . t4) = P(t1) * P(t2|t1) * P(t3|t2) * P(t4|t3)$
 
 ## Metrics
 
@@ -229,7 +229,7 @@ Recall e precision dão tradeoff uma contra a outra:
 ### F Measure
 
 - Weighted harmonic mean of recall and precision.
-- **F1** - æ = 1/2; ẞ = 1 - default balanced F measure - `2*P*R / (P + R)`
+- **F1** - æ = 1/2; ẞ = 1 - default balanced F measure - $\frac{2*P*R}{P + R}$
 - Harmonic mean é usada porque a arithmetic mean dá 50% quando pomos, por
   exemplo, o recall a 100% (retrieve de tudo).
 - Harmonic mean dá um resultado mais próximo do mínimo.
@@ -268,7 +268,7 @@ Recall e precision dão tradeoff uma contra a outra:
 |-----|------|------|------|------|------|------|------|------|------|-----|
 ```
 
-AvP = (1 + 0.67 + 0.75 + 0.8 + 0.83 + 0.6) / 6
+AvP = $\frac{1 + 0.67 + 0.75 + 0.8 + 0.83 + 0.6}{6}$
 
 #### MAP - Mean Average Precision
 
@@ -291,7 +291,7 @@ AvP = (1 + 0.67 + 0.75 + 0.8 + 0.83 + 0.6) / 6
   queries).
 - Vamos buscar o top R documentos para a query.
 - Vemos quantos são relevantes => r.
-- `R-Precision = r/R`
+- `R-Precision` = $\frac{r}{R}$
 - Intimamente ligada a map.
 
 ## Relevance judgement
