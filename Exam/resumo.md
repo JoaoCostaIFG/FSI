@@ -1,5 +1,112 @@
 # PRI 2021/2022
 
+## Information processing
+
+- **Data**:
+  - Fact know by direct observation
+  - Measurement of something on a scale
+- **Metadata**:
+  - Data about data (author, date), structure, administrative, legal, etc
+- **Information**:
+  - Data w/ context & meaning => enables decision making
+  - Data that has been processed, organized and structured
+
+### Cycle of information
+
+1. **Occurance** - Discover, design, author, etc;
+2. **Transmission** - Network, accessing, retrieving, transmitting, etc;
+3. **Processing & Management** - Collecting, validating, modifying, indexing,
+   classifying, filtering, sorting, storing, etc;
+4. **Usage:** Monitoring, explaining, planning, forecasting, decision-making,
+   educating, learning, etc.
+
+Generate -> Collect -> Store -> Process -> Distribute -> Consume ->
+Recycle/Erase -> Generate...
+
+### Value
+
+- **Indirect value** — data provides value by influencing of supporting
+  decisions, e.g. risk analysis in insurance, purchase decisions in retail.
+- **Direct value** — data provides value by feeding automated systems, e.g.
+  search system, product recommendation system.
+
+Value can be increased by making it available, combining various disperse data
+sources, cleaning it, structuring it or enriching it (complement w/ data from
+other sources)
+
+### Data Stages
+
+Data moves through three main stages:
+
+- **Raw** — focus is on data discovery; the primary goals are ingestion,
+  understanding, and metadata creation; common questions include: what kinds of
+  records are in the data? how are record fields encoded?
+- **Refined** — focus is on data preparation for further exploration; tasks
+  include removing unwanted parts, reshaping poorly formatted elements;
+  establishing relationships between datasets; assessing data quality issues.
+- **Production** — focus is on integrating the data into production processes or
+  products.
+
+Several data processing pattern exist in the literature, including: ETL, ELT,
+OSEMN.
+
+### Data processing frameworks
+
+#### ETL - extract-transform-load
+
+- Old;
+- Usualmente associado a centralized IT ops.
+
+#### ELT - extract-load-transform
+
+- Evolution of ETL: Allows clean split of responsabilities between data
+  engineers (EL) and data analysts (T);
+- Column-oriented data structures are particularly well-suited to typical data
+  processing tasks, i.e. organizing operations per field or property;
+- Sub-pattern EtLT introduces a transformation step before the loading,
+  typically associated with data cleaning tasks;
+- Load-transform, in contrast with transform-load, is a pattern more well-suited
+  to the division of responsibilities in multidisciplinary team.
+
+#### OSEMN
+
+- **Obtain** - gathering data;
+- **Scrub** - clear, arrange, prepare data;
+- **Explore** - observe, experiment, visualize;
+- **Model** - create a statistical model of the data;
+- **Interpret** - draw conclusions, evaluating and communicating results.
+
+Although presented as a series of steps, real-word processes are typically
+non-linear.
+
+## Data Collection
+
+### Diversity of Data Sources
+
+- **Ownership** — either owned or from third-parties; i.e. know what data you
+  have access to and what you can do with it;
+- **Ingestion interface and structure** — how do you get the data and in what
+  form is in;
+- **Volume** — in each step of the pipeline, volume needs to be taken into
+  account; hig/low is difficult to define and depend on available
+  infrastructures and algorithms;
+- **Cleanliness and validity** — duplicate data, missing or incomplete data,
+  encoding, etc;
+- **Latency and bandwidth of the source** — need to consider internal update
+  requirements + source system limits, speed, timeouts, etc.
+
+### Open data
+
+- **"Web of data"** is an expression to represent the set of technologies and
+  practices that enable a space where data can be automatically discovered and
+  accessed by machines.
+
+Also related is the concept of **FAIR**: findable, accessible, interoperable,
+and reusable; emphasizing machine-actionability over data.
+
+- **FAIR/O** is used to indicate that a data source complies with FAIR and is
+  also of open nature
+
 ## IR concepts
 
 - **Information retrieval (IR)** - is finding material (usually documents) of an
@@ -597,10 +704,75 @@ dificil extrair texto então vamos buscar a `<foam:name>` ou `<rdfs:label>`.
 
 ## Search User Interfaces
 
-- The HCI community has developed the DECIDE process to help on this decision:
-  - **D** - **Determine** the goals of the evaluation;
-  - **E** - **Explore** the specific questions to be answered;
-  - **C** - **Choose** an evaluation paradigm;
-  - **I** - **Identify** pratical issues in performing the evaluation;
-  - **D** - **Decide** how to deal with any ethical issues;
-  - **E** - **Evaluate**, interpret, and present the data.
+### Design principles
+
+General user interface design guidelines.
+
+1. Visibility - manter user informado do que se passa. E.g. manter search box
+   sempre visível;
+2. Language - usar termos que o user perceba. E.g. _search_ em vez de _query_;
+3. Control and freedom - não bloquear user num path => dar mecanismos de
+   recuperação. E.g. highlight spelling errors, but not force them;
+4. Consistency - design e linguagem sempre consistentes;
+5. Error prevention - tornar dificil fazer coisas unproductive;
+6. Support recognition - ajudar user a lembrar coisas. E.g. mostrar related
+   searchs e manter search box no ecrã;
+7. Flexibility and efficiency - shortcuts para users serem mais productive. E.g.
+   navegar com o teclado;
+8. Aesthetics and minimalism - design simples;
+9. Clear error messages - erros informativos e uteis. E.g. em vez de dizer que
+   não há results, dar também searches alternativas;
+10. Help and documentation - guides, FAQs, examples...
+
+### Input features
+
+- Dao suggestions ou keyword searches ou browsable metadata;
+- **Search box** - white text field para por search terms.
+  - É também um informational feature pk informa sobre pesquisa atual;
+  - Se for mantido visível, é control feature tmb.
+
+### Control features
+
+- Query changes interativas => clicar em related searches;
+- Spelling suggestions;
+- Sorting;
+- Filters;
+
+### Informational features
+
+- Tem a ver com como a info é organizada/displayed;
+- Cada resultado tem titulo + snipped de texto + URL;
+
+### Personalization features
+
+- Dar tailor à search para o user;
+- Pode ser baseada em dados do utilizador ou em dados agregados;
+- Pode impactar ranking de results, search suggestions e search engine features.
+
+### Avaliar search UI
+
+- **IR style:**
+  - Avaliar estilo TREC => pouco sucesso;
+  - Precision e Recall simplesmente não são enough para avaliar isto.
+- **Empirical User Studies:**
+  - Focam em quão bem o sistema deixa o user completar uma task;
+  - Criam-se tasks focadas em search para user avaliar sistema;
+  - Observa-se e grava-se actual user performance;
+  - Common measurements: number of searches, number of terms per search, number
+    os results visited, search times, task accuracy, etc... Também se pode user
+    métodos qualitativos, e.g. intervistas;
+  - É dificil de fazer => muitos fatores incluido a motivação dos participantes,
+    bugs no software, e pequenas UX differences (sligh differences in color).
+- **Analytical Approaches:**
+  - Low-cost inspection;
+  - Tiram partido da experiência passada dos experts;
+  - Apenas fazem estimativas antes de uma formal evaluation.
+
+The HCI community has developed the DECIDE process to help on this decision:
+
+- **D** - **Determine** the goals of the evaluation;
+- **E** - **Explore** the specific questions to be answered;
+- **C** - **Choose** an evaluation paradigm;
+- **I** - **Identify** pratical issues in performing the evaluation;
+- **D** - **Decide** how to deal with any ethical issues;
+- **E** - **Evaluate**, interpret, and present the data.
