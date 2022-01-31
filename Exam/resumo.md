@@ -3,13 +3,13 @@
 ## Information processing
 
 - **Data**:
-  - Fact know by direct observation
-  - Measurement of something on a scale
+  - Fact know by direct observation;
+  - Measurement of something on a scale.
 - **Metadata**:
-  - Data about data (author, date), structure, administrative, legal, etc
+  - Data about data (author, date), structure, administrative, legal, etc;
 - **Information**:
-  - Data w/ context & meaning => enables decision making
-  - Data that has been processed, organized and structured
+  - Data w/ context & meaning => enables decision making;
+  - Data that has been processed, organized and structured.
 
 ### Cycle of information
 
@@ -17,11 +17,13 @@
 2. **Transmission** - Network, accessing, retrieving, transmitting, etc;
 3. **Processing & Management** - Collecting, validating, modifying, indexing,
    classifying, filtering, sorting, storing, etc;
-4. **Usage:** Monitoring, explaining, planning, forecasting, decision-making,
+4. **Usage** - Monitoring, explaining, planning, forecasting, decision-making,
    educating, learning, etc.
 
+```plaintxt
 Generate -> Collect -> Store -> Process -> Distribute -> Consume ->
-Recycle/Erase -> Generate...
+-> Recycle/Erase -> Generate...
+```
 
 ### Value
 
@@ -32,7 +34,7 @@ Recycle/Erase -> Generate...
 
 Value can be increased by making it available, combining various disperse data
 sources, cleaning it, structuring it or enriching it (complement w/ data from
-other sources)
+other sources).
 
 ### Data Stages
 
@@ -266,7 +268,7 @@ Q: `Brutus AND Calpurnia`
 ### tf-idf
 
 - Combinar **tf** e **idf** resulta num weighting scheme: `tf-idf = tf * idf`
-- Para um termo `t`, num documento `d`, **idf** é:
+- Para um termo `t`, num documento `d`, **tf-idf** é:
   - highest quando `t` ocorre muitas vezes num número pequeno de documentos;
   - lower quando o termo ocorre poucas vezes num documento, ou ocorre em muitos
     documentos;
@@ -592,7 +594,7 @@ C <- A -> B
 ## Relevance Feedback
 
 - Exact matches aren't the only way to obtain relevant results;
-- Vocabulary mismatch between the user and the collection, e.g. synonyms exit.
+- Vocabulary mismatch between the user and the collection, e.g. synonyms exist.
 - System side techniques:
   - global methods expand or reformulate the query terms indenpendently of the
     query or the results: thesaurus + spell correction;
@@ -606,17 +608,17 @@ C <- A -> B
 
 ### Relevance feedback (e.g. Rocchio)
 
-- User faz short, simple query.
-- User seleciona os relevantes dos resultados inciais dessa query.
-- Sistema usa essa info para refinar a query.
-- Pode repetir ad nauseam.
+- User faz short, simple query;
+- User seleciona os relevantes dos resultados inciais dessa query;
+- Sistema usa essa info para refinar a query;
+- Pode repetir ad nauseam;
 - Idea: it is difficult to formulate a good query when you don't know the
-  collection.
-- Useful for image search (images can be hard to describe).
-- Can improve both recall and precision, but in practice is more useful for
-  increasing recall (users only take the time to refine the query when they want
-  to see an high number of relevant documents).
-- Positive feedback is more useful like negative (many systems only allow
+  collection;
+- Useful for image search (images can be hard to describe);
+- Can improve both recall and precision, but in practice is **more useful for
+  increasing recall** (users only take the time to refine the query when they
+  want to see an high number of relevant documents);
+- **Positive feedback is more useful** than negative (many systems only allow
   positive feedback).
 
 #### Limitations
@@ -640,7 +642,8 @@ C <- A -> B
 - **Entities** - UID, Name(s), Type(s), Attributes, Relationships;
 - **RDF**: **Subject (URI)**  
   -**Predicate (URI de relationship or property)**->  
-  **Object (URI or literal)**.
+  **Object (URI or literal)**;
+- Podemos ver as entidades com nós no grafo e as relações entre elas como edges.
 
 ### Entity-Oriented Search
 
