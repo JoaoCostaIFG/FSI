@@ -6,13 +6,19 @@
 - João Costa - up201806560@edu.fe.up.pt
 - João Martins - up201806436@edu.fe.up.pt
 
+## Details
+
+This was mainly developed as a research project. The reports and presentation
+slides are available in the [docs directory](./docs).
+
 ## Usage
 
 Run `make` in the root folder.
 
 ### Dependencies
 
-Make sure you have the following dependencies installed before running the project:
+Make sure you have the following dependencies installed before running the
+project:
 
 - [jq](https://stedolan.github.io/jq/)
 - [pandas](https://pandas.pydata.org/)
